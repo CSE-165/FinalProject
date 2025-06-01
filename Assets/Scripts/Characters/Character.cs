@@ -18,7 +18,7 @@ public class Character : MonoBehaviour
 
     [Header("Group")]
     public Group groups;
-    public string currTopic
+    public string currTopic;
 
     public void Start()
     {
