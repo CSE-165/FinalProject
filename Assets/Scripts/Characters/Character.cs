@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Character class represents a non-player character (NPC) in the game.
+/// It contains properties for NPC identification, loaded data, group affiliation,
+/// and player utilities.
+/// </summary>
 public class Character : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
+
+
     [Header("NPC Identifier")]
     public string npcID;
 
@@ -23,7 +28,7 @@ public class Character : MonoBehaviour
     [Header("Player Utilities")]
     public Animation playerAnimation;
     public float position;
-    private bool active = false;
+    private bool active = false; // Indicates if the character is active in the game
 
     public void Start()
     {
@@ -39,6 +44,9 @@ public class Character : MonoBehaviour
         Pathing();
     }
 
+    /// <summary>
+    /// Loads NPC data from a JSON file located in the Resources folder.
+    /// </summary>
     public void LoadNPCData()
     {
         TextAsset jsonFile = Resources.Load<TextAsset>("Assets/Scripts/Characters/CharacterData/npcs");
@@ -64,10 +72,16 @@ public class Character : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Activates the character, allowing it to start pathing and interacting with groups.
+    /// </summary>
     private void Pathing()
     {
         int maxValue = 0;
         string topic = "";
+
+        // Checks for current max interest level.
         foreach (var interest in interests)
         {
             if (interest.interestLevel > maxValue)
@@ -76,7 +90,7 @@ public class Character : MonoBehaviour
                 topic = interest.interestName;
             }
         }
-
+        // If new max interest topic is found, update the current topic and move character.
         if (currTopic != topic)
         {
             currTopic = topic;
@@ -96,10 +110,10 @@ public class Character : MonoBehaviour
 
             Vector3 pos = new Vector3(
                 Mathf.Cos(angleRad) * 8f,
-                0f, // Assuming your characters are on the XZ plane
+                0f, 
                 Mathf.Sin(angleRad) * 8f
             );
-            
+
             transform.position = Vector3.Lerp(transform.position, groupPosition + pos, Time.deltaTime * 0.5f);
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(groupPosition), Time.deltaTime * 0.5f);
             //playerAnimation.Play("Walk");
@@ -107,17 +121,26 @@ public class Character : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Broadcasts a message to other characters in the group.
+    /// </summary>
     public void Broadcast(string message)
     {
         Debug.Log($"{npcID} broadcasts: {message}");
         // Here you can implement the logic to send the message to other characters in the group
     }
 
+    /// <summary>
+    /// Data structure for holding a list of NPC data.
+    /// </summary>
     public class NPCDataList
     {
         public NPCData[] npcList;
     }
 
+    /// <summary>
+    /// Data structure for holding individual NPC data.
+    /// </summary>
     public class NPCData
     {
         public string id;
@@ -128,12 +151,18 @@ public class Character : MonoBehaviour
         public Relation[] relations;
     }
 
+    /// <summary>
+    /// Data structure for holding interests and their levels.
+    /// </summary>
     public class Interests
     {
         public string interestName;
         public int interestLevel;
     }
 
+    /// <summary>
+    /// Data structure for holding relations and their levels.
+    /// </summary>
     public class Relation
     {
         public string relationName;
