@@ -20,7 +20,7 @@ public class ConfigManager : MonoBehaviour
         {
             string json = File.ReadAllText(filePath);
             Config = JsonUtility.FromJson<ConfigData>(json);
-            Debug.Log("API Key loaded: " + Config.apiKey);
+            
         }
         else
         {

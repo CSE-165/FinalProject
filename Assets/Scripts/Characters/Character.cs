@@ -20,14 +20,28 @@ public class Character : MonoBehaviour
     public Group groups;
     public string currTopic;
 
+    [Header("Player Utilities")]
+    public Animation playerAnimation;
+    public float position;
+    private bool active = false;
+
     public void Start()
     {
         LoadNPCData();
     }
 
+    public void Update()
+    {
+        if (!active)
+        {
+            return;
+        }
+        Pathing();
+    }
+
     public void LoadNPCData()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Scripts/Characters/CharacterData/npcs");
+        TextAsset jsonFile = Resources.Load<TextAsset>("Assets/Scripts/Characters/CharacterData/npcs");
         if (jsonFile == null)
         {
             Debug.LogError("npcs.json not found in Resources!");
@@ -67,7 +81,36 @@ public class Character : MonoBehaviour
         {
             currTopic = topic;
             groups.AddCharacterToGroup(this, topic);
+
+            Vector3 groupPosition = groups.GetGroupPosition(topic);
+
+            position = Random.Range(0f, 36f);
+
+            while (!groups.CheckCharacterPosition(currTopic, position))
+            {
+                position = Random.Range(0f, 36f);
+            }
+
+            float angle = position * 10f;
+            float angleRad = angle * Mathf.Deg2Rad;
+
+            Vector3 pos = new Vector3(
+                Mathf.Cos(angleRad) * 8f,
+                0f, // Assuming your characters are on the XZ plane
+                Mathf.Sin(angleRad) * 8f
+            );
+            
+            transform.position = Vector3.Lerp(transform.position, groupPosition + pos, Time.deltaTime * 0.5f);
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(groupPosition), Time.deltaTime * 0.5f);
+            //playerAnimation.Play("Walk");
         }
+    }
+
+
+    public void Broadcast(string message)
+    {
+        Debug.Log($"{npcID} broadcasts: {message}");
+        // Here you can implement the logic to send the message to other characters in the group
     }
 
     public class NPCDataList

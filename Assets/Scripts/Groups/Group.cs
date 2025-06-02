@@ -8,8 +8,10 @@ public class Group : MonoBehaviour
     [Header("Loaded Group Data")]
     public string[] topics;
 
+
     [Header("Group Position")]
-    public Vector3[] groupPosition;
+    public GameObject[] groupPosition;
+
 
     [Header("NPC's In This Group")]
     public GroupData[] groupData;
@@ -30,7 +32,7 @@ public class Group : MonoBehaviour
 
     public void LoadGroupData()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Scripts/Groups/GroupData/topics");
+        TextAsset jsonFile = Resources.Load<TextAsset>("Assets/Scripts/Groups/GroupData/topics.json");
         if (jsonFile == null)
         {
             Debug.LogError("topics.json not found in Resources!");
@@ -79,9 +81,46 @@ public class Group : MonoBehaviour
 
     public Vector3 GetGroupPosition(string topic)
     {
-        return groupPosition[System.Array.IndexOf(topics, topic)];
+        return groupPosition[System.Array.IndexOf(topics, topic)].transform.position;
     }
-    
+
+    public void SendMessageToNPC(string topic, string message, string npcID)
+    {
+        foreach (var group in groupData)
+        {
+            if (group.topic == topic)
+            {
+                foreach (var character in group.characters)
+                {
+                    if (character.npcID == npcID)
+                    {
+                        character.Broadcast(message);
+                        return;
+                    }
+                }
+            }
+        }
+
+    }
+
+    public bool CheckCharacterPosition(string topic, float position)
+    {
+        foreach (var group in groupData)
+        {
+            if (group.topic == topic)
+            {
+                foreach (var character in group.characters)
+                {
+                    if (character.position == position)
+                    {
+                        
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     [System.Serializable]
     public class GroupDataList
