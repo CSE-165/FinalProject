@@ -32,7 +32,7 @@ public class Group : MonoBehaviour
 
     public void LoadGroupData()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Assets/Scripts/Groups/GroupData/topics.json");
+        TextAsset jsonFile = Resources.Load<TextAsset>("GroupData/topics");
         if (jsonFile == null)
         {
             Debug.LogError("topics.json not found in Resources!");
