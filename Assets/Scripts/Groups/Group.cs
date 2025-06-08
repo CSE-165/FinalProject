@@ -25,12 +25,16 @@ public class Group : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        LoadGroupData();
+        groupData = new GroupData[1];
+        groupData[0].topic = "fishing";
+        //LoadGroupData();
 
-        if (groupPosition.Length != topics.Length)
-        {
-            Debug.LogError("Group positions and topics count mismatch!");
-        }
+        // if (groupPosition.Length != topics.Length)
+        // {
+        //     Debug.LogError("Group positions and topics count mismatch!");
+        // }
+
+        SendMessageToNPC("fishing", "hello sophie do you like fishing?", "Sophie");
     }
 
     /// <summary>

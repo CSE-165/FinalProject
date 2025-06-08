@@ -1,0 +1,199 @@
+{
+  "npcList": [
+    {
+      "id": "Sophie",
+      "description": "A young friendly outgoing adult woman who loves cats and baking. She has an easy going vibe and always has time to chat. Sophie is blonde with her hair tied into a bun, and is wearing a orange sweater with a cat symbol on it, jean shorts, and orange tennis shoes.",
+      "dislikes": ["animal cruelty", "rainy days", "loud arguments or confrontation"],
+      "likes": ["cats", "meeting new people", "baking"],
+      "interests": [
+        {
+          "interestName": "fishing",
+          "interestLevel": 3
+        },
+        {
+          "interestName": "fashion",
+          "interestLevel": 5
+        },
+        {
+          "interestName": "pets",
+          "interestLevel": 10
+        }
+        ,
+        {
+          "interestName": "travel",
+          "interestLevel": 7
+        }
+        ,
+        {
+          "interestName": "gossip",
+          "interestLevel": 8
+        }
+      ],
+      "relations": [
+        {
+          "relationName": "Remy",
+          "relationLevel": 0
+        },
+        {
+          "relationName": "Leonard",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Elizabeth",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "David",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Suzie",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Bryce",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Megan",
+          "relationLevel": 0
+        }
+      ]
+    },
+    {
+      "id": "Remy",
+      "description": "Remy is a 22 year old man who loves surfing at the beach. He has a casual attitude towards life and is currently unemployed.",
+      "dislikes": ["rules and responsibilities", "close mindedness"],
+      "likes": ["surfing", "storytelling"],
+      "interests": [
+        {
+          "interestName": "fishing",
+          "interestLevel": 8
+        },
+        {
+          "interestName": "fashion",
+          "interestLevel": 2
+        },
+        {
+          "interestName": "pets",
+          "interestLevel": 6
+        }
+        ,
+        {
+          "interestName": "travel",
+          "interestLevel": 9
+        }
+        ,
+        {
+          "interestName": "gossip",
+          "interestLevel": 5
+        }
+      ],
+      "relations": [
+        {
+          "relationName": "Sophie",
+          "relationLevel": 0
+        },
+        {
+          "relationName": "Leonard",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Elizabeth",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "David",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Suzie",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Bryce",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Megan",
+          "relationLevel": 0
+        }
+      ]
+    },
+    {
+      "id": "Leonard",
+      "description": "Leonard is a businessman. He loves networking and making decisions. He is often well dressed in order to make a good impression.",
+      "dislikes": ["disorderly conduct", "disrespect"],
+      "likes": ["meeting new people", "talking about his work"],
+      "interests": [
+        {
+          "interestName": "fishing",
+          "interestLevel": 6
+        },
+        {
+          "interestName": "fashion",
+          "interestLevel": 7
+        },
+        {
+          "interestName": "pets",
+          "interestLevel": 3
+        }
+        ,
+        {
+          "interestName": "travel",
+          "interestLevel": 8
+        }
+        ,
+        {
+          "interestName": "gossip",
+          "interestLevel": 5
+        }
+      ],
+      "relations": [
+        {
+          "relationName": "Sophie",
+          "relationLevel": 0
+        },
+        {
+          "relationName": "Remy",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Elizabeth",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "David",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Suzie",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Bryce",
+          "relationLevel": 0
+        }
+        ,
+        {
+          "relationName": "Megan",
+          "relationLevel": 0
+        }
+      ]
+    }
+  ]
+}

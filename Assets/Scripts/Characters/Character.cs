@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// Character class represents a non-player character (NPC) in the game.
@@ -28,11 +29,13 @@ public class Character : MonoBehaviour
     [Header("Player Utilities")]
     public Animation playerAnimation;
     public float position;
+    public TMP_Text textBubble;
     private bool active = false; // Indicates if the character is active in the game
 
     public void Start()
     {
         LoadNPCData();
+        Broadcast("hi my name sophie");
     }
 
     public void Update()
@@ -49,7 +52,7 @@ public class Character : MonoBehaviour
     /// </summary>
     public void LoadNPCData()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Assets/Scripts/Characters/CharacterData/npcs");
+        TextAsset jsonFile = Resources.Load<TextAsset>("CharacterData/npcs");
         if (jsonFile == null)
         {
             Debug.LogError("npcs.json not found in Resources!");
@@ -128,6 +131,7 @@ public class Character : MonoBehaviour
     {
         Debug.Log($"{npcID} broadcasts: {message}");
         // Here you can implement the logic to send the message to other characters in the group
+        textBubble.text = message;
     }
 
     /// <summary>
