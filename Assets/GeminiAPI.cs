@@ -3,11 +3,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
+using System;
 
 public class GeminiAPI : MonoBehaviour
 {
-    [Header("Replace this with your Gemini API Key")]
-    private string apiKey;
+    
+    private string apiKey;  //Replace this with your Gemini API Key
 
     private string apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
 
