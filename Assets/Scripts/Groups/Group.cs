@@ -172,5 +172,7 @@ public class Group : MonoBehaviour
     {
         public string topic;
         public Character[] characters;
+        public List<ConversationTurn> conversationHistory = new List<ConversationTurn>();
     }
+
 }
