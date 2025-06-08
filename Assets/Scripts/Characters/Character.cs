@@ -32,6 +32,18 @@ public class Character : MonoBehaviour
     public TMP_Text textBubble;
     private bool active = false; // Indicates if the character is active in the game
 
+    private Vector3 destination; //If NPC decides to move, destination.
+    private float thinkingTimer, timeToThink, moveSpeed, interestThreshold, npcInterestLevel = 10;
+    public enum NPCState
+    {
+        PARTICIPATING,    // In a group and content for now.
+        CONSIDERING_MOVE, // Interest has dropped; thinking about leaving for a few seconds.
+        AWAITING_EXIT,    // Decided to leave, waiting for a turn to speak.
+        MOVING,           // Actively walking to a new group.
+        WANDERING         // No groups are interesting; taking a break.
+    }
+
+    private NPCState state = NPCState.PARTICIPATING;
     public void Start()
     {
         LoadNPCData();
@@ -44,7 +56,30 @@ public class Character : MonoBehaviour
         {
             return;
         }
-        Pathing();
+        //Pathing();
+
+        switch (state)
+        {
+            case NPCState.PARTICIPATING:
+                
+                break;
+
+            case NPCState.MOVING:
+
+                break;
+
+            case NPCState.CONSIDERING_MOVE:
+
+                break;
+
+            case NPCState.AWAITING_EXIT:
+
+                break;
+
+            case NPCState.WANDERING:
+
+                break;                
+        }
     }
 
     /// <summary>
