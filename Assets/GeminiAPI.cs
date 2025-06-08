@@ -2,11 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
+using System;
 
 public class GeminiAPI : MonoBehaviour
 {
-    [Header("Replace this with your Gemini API Key")]
-    private string apiKey;
+    
+    private string apiKey;  //Replace this with your Gemini API Key
 
     private string apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
 
@@ -20,12 +21,12 @@ public class GeminiAPI : MonoBehaviour
         }
     }
 
-    public void SendPrompt(string prompt)
+    public void SendPrompt(string prompt, Action<string> onResponse)
     {
-        StartCoroutine(SendPromptCoroutine(prompt));
+        StartCoroutine(SendPromptCoroutine(prompt, onResponse));
     }
 
-    private IEnumerator SendPromptCoroutine(string prompt)
+    private IEnumerator SendPromptCoroutine(string prompt, Action<string> onResponse)
     {
         string fullUrl = apiUrl + apiKey;
         
@@ -54,11 +55,11 @@ public class GeminiAPI : MonoBehaviour
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log("Response: " + request.downloadHandler.text);
+                onResponse?.Invoke(request.downloadHandler.text);
             }
             else
             {
-                Debug.LogError("Error: " + request.error + " | Response: " + request.downloadHandler.text);
+                onResponse?.Invoke($"Error: {request.error} | Response: {request.downloadHandler.text}");
             }
         }
     }
