@@ -48,6 +48,7 @@ public class PromptManager : MonoBehaviour
                     // Make the character speak and update conversation history
                     speaker.Broadcast(turn.message); // Broadcast NPC message
                     groupData.conversationHistory.Add(turn);
+                    Debug.Log($"NPC {turn.speaker} says: {turn.message}");
                 }
                 else
                 {

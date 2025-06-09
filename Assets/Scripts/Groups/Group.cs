@@ -17,12 +17,15 @@ public class Group : MonoBehaviour
     [Header("Utilities")]
     public GeminiAPI geminiAI;
 
+    public PromptManager promptManager;
+
     // Start is called before the first frame update
     public void Start()
     {
         groupData = new GroupData[4]; // Initialize with an empty array
         LoadGroupData();
 
+        promptManager.GenerateMultiTurnConversation(groupData[0], 10); // Example usage, generating conversation for the first group
         // if (groupPosition.Length != topics.Length)
         // {
         //     Debug.LogError("Group positions and topics count mismatch!");
