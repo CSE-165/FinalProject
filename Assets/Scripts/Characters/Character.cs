@@ -45,6 +45,7 @@ public class Character : MonoBehaviour
     {
         LoadNPCData();
         Broadcast("hi my name sophie");
+        StartCoroutine(InterestReducer());
     }
 
     public void Update()
@@ -199,7 +200,7 @@ public class Character : MonoBehaviour
     {
         foreach (var interest in interests)
         {
-            if (interest.interestName == currTopic && interest.interestLevel <= (100-val))
+            if (interest.interestName == currTopic && interest.interestLevel <= (100 - val))
             {
                 interest.interestLevel += val;
             }
@@ -209,11 +210,21 @@ public class Character : MonoBehaviour
     {
         foreach (var interest in interests)
         {
-            if (interest.interestName == currTopic && interest.interestLevel>=val)
+            if (interest.interestName == currTopic && interest.interestLevel >= val)
             {
                 interest.interestLevel -= val;
             }
         }
+    }
+
+    IEnumerator InterestReducer()
+    {
+        while (true)
+        {
+            DecreaseInterest(5);
+            yield return new WaitForSecondsRealtime(10f);
+        }
+
     }
 
 }
