@@ -37,10 +37,7 @@ public class Character : MonoBehaviour
     public enum NPCState
     {
         PARTICIPATING,    // In a group and content for now.
-        CONSIDERING_MOVE, // Interest has dropped; thinking about leaving for a few seconds.
-        AWAITING_EXIT,    // Decided to leave, waiting for a turn to speak.
         MOVING,           // Actively walking to a new group.
-        WANDERING         // No groups are interesting; taking a break.
     }
 
     private NPCState state = NPCState.PARTICIPATING;
@@ -67,18 +64,6 @@ public class Character : MonoBehaviour
             case NPCState.MOVING:
 
                 break;
-
-            case NPCState.CONSIDERING_MOVE:
-
-                break;
-
-            case NPCState.AWAITING_EXIT:
-
-                break;
-
-            case NPCState.WANDERING:
-
-                break;                
         }
     }
 
@@ -87,7 +72,7 @@ public class Character : MonoBehaviour
     /// </summary>
     public void LoadNPCData()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("CharacterData/npcs");
+        TextAsset jsonFile = Resources.Load<TextAsset>("CharacterData/npcs.json");
         if (jsonFile == null)
         {
             Debug.LogError("npcs.json not found in Resources!");
