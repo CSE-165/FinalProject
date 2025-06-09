@@ -8,25 +8,25 @@
       "interests": [
         {
           "interestName": "fishing",
-          "interestLevel": 3
+          "interestLevel": 30
         },
         {
           "interestName": "fashion",
-          "interestLevel": 5
+          "interestLevel": 50
         },
         {
           "interestName": "pets",
-          "interestLevel": 10
+          "interestLevel": 100
         }
         ,
         {
           "interestName": "travel",
-          "interestLevel": 7
+          "interestLevel": 70
         }
         ,
         {
           "interestName": "gossip",
-          "interestLevel": 8
+          "interestLevel": 80
         }
       ],
       "relations": [
@@ -73,25 +73,25 @@
       "interests": [
         {
           "interestName": "fishing",
-          "interestLevel": 8
+          "interestLevel": 80
         },
         {
           "interestName": "fashion",
-          "interestLevel": 2
+          "interestLevel": 20
         },
         {
           "interestName": "pets",
-          "interestLevel": 6
+          "interestLevel": 60
         }
         ,
         {
           "interestName": "travel",
-          "interestLevel": 9
+          "interestLevel": 90
         }
         ,
         {
           "interestName": "gossip",
-          "interestLevel": 5
+          "interestLevel": 50
         }
       ],
       "relations": [
@@ -138,25 +138,25 @@
       "interests": [
         {
           "interestName": "fishing",
-          "interestLevel": 6
+          "interestLevel": 60
         },
         {
           "interestName": "fashion",
-          "interestLevel": 7
+          "interestLevel": 70
         },
         {
           "interestName": "pets",
-          "interestLevel": 3
+          "interestLevel": 30
         }
         ,
         {
           "interestName": "travel",
-          "interestLevel": 8
+          "interestLevel": 80
         }
         ,
         {
           "interestName": "gossip",
-          "interestLevel": 5
+          "interestLevel": 50
         }
       ],
       "relations": [

@@ -3,15 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-/// <summary>
-/// Character class represents a non-player character (NPC) in the game.
-/// It contains properties for NPC identification, loaded data, group affiliation,
-/// and player utilities.
-/// </summary>
 public class Character : MonoBehaviour
 {
-
-
     [Header("NPC Identifier")]
     public string npcID;
 
@@ -30,82 +23,70 @@ public class Character : MonoBehaviour
     public Animation playerAnimation;
     public float position;
     public TMP_Text textBubble;
-    private bool active = false; // Indicates if the character is active in the game
 
-    private Vector3 destination; //If NPC decides to move, destination.
-    private float thinkingTimer, timeToThink, moveSpeed;
+    [Header("Movement & Behavior Settings")]
+    public float moveSpeed = 3f;
+    [Tooltip("The NPC will look for a new group only when interest in the current topic drops below this value.")]
+    public int interestThreshold = 10; // The new "boredom" threshold
+
+    // --- State Machine ---
+    private Vector3 destination;
+    private NPCState state = NPCState.PARTICIPATING;
     public enum NPCState
     {
-        PARTICIPATING,    // In a group and content for now.
-        MOVING,           // Actively walking to a new group.
+        PARTICIPATING,    // Checking for better groups
+        MOVING            // Moving to a new group
     }
 
-    private NPCState state = NPCState.PARTICIPATING;
     public void Start()
     {
         LoadNPCData();
         StartCoroutine(InterestReducer());
+        // The first Update() call will handle finding the initial group.
     }
 
     public void Update()
     {
-        // if (!active)
-        // {
-        //     return;
-        // }
-        //Pathing();
-
-        // switch (state)
-        // {
-        //     case NPCState.PARTICIPATING:
-
-        //         break;
-
-        //     case NPCState.MOVING:
-
-        //         break;
-        // }
-    }
-
-    /// <summary>
-    /// Loads NPC data from a JSON file located in the Resources folder.
-    /// </summary>
-    public void LoadNPCData()
-    {
-        TextAsset jsonFile = Resources.Load<TextAsset>("CharacterData/npcs");
-        if (jsonFile == null)
+        switch (state)
         {
-            Debug.LogError("npcs.json not found in Resources!");
-            return;
+            case NPCState.PARTICIPATING:
+                DecideOnBestTopic();
+                break;
+
+            case NPCState.MOVING:
+                PerformMovement();
+                break;
         }
+    }
+    
+    /// <summary>
+    /// This is the "brain". It checks interests and decides if a move is needed.
+    /// It runs every frame while in the PARTICIPATING state.
+    /// </summary>
+    void DecideOnBestTopic()
+    {
+        if (groups.groupData == null) return;
 
-        NPCDataList npcDataList = JsonUtility.FromJson<NPCDataList>(jsonFile.text);
-       
-        foreach (var data in npcDataList.npcList)
+        // --- NEW LOGIC: The "Boredom Check" ---
+        // If the character is already in a group...
+        if (!string.IsNullOrEmpty(currTopic))
         {
-            if (data.id == npcID)
+            // ...check if they are still interested enough to stay.
+            if (GetCurrentInterestLevel() >= interestThreshold)
             {
-                description = data.description;
-                dislikes = data.dislikes;
-                likes = data.likes;
-                interests = data.interests;
-                relations = data.relations;
-
-                return;
+                // Interest is high enough. Do nothing. Stay put.
+                return; 
             }
         }
-    }
+        // --- END OF NEW LOGIC ---
+        // If we reach this point, it means one of two things:
+        // 1. The character has no group yet.
+        // 2. The character IS in a group, but is bored (interest < threshold).
+        // In either case, it's time to find the best possible group.
 
-
-    /// <summary>
-    /// Activates the character, allowing it to start pathing and interacting with groups.
-    /// </summary>
-    private void Pathing()
-    {
         int maxValue = 0;
-        string topic = "";
+        string bestTopic = ""; // Set to empty initially
 
-        // Checks for current max interest level.
         foreach (var group in groups.groupData)
         {
             foreach (var interest in interests)
@@ -113,125 +94,122 @@ public class Character : MonoBehaviour
                 if (interest.interestName == group.topic && interest.interestLevel > maxValue)
                 {
                     maxValue = interest.interestLevel;
-                    topic = group.topic;
+                    bestTopic = group.topic;
                 }
             }
         }
-        // If new max interest topic is found, update the current topic and move character.
-        if (currTopic != topic)
-        {
-            currTopic = topic;
-            groups.AddCharacterToGroup(this, topic);
 
-            Vector3 groupPosition = groups.GetGroupPosition(topic);
+        // If we found a valid topic AND it's different from our current one, let's move.
+        // (The second condition is important if our interest dropped but no better group exists)
+        if (!string.IsNullOrEmpty(bestTopic) && currTopic != bestTopic)
+        {
+            // If we are leaving a group, formally remove ourselves.
+            if (!string.IsNullOrEmpty(currTopic))
+            {
+                groups.RemoveCharacterFromGroup(this, currTopic);
+            }
+
+            currTopic = bestTopic;
+            groups.AddCharacterToGroup(this, bestTopic);
+            Vector3 groupPosition = groups.GetGroupPosition(bestTopic);
 
             position = Random.Range(0f, 36f);
-
-            // while (!groups.CheckCharacterPosition(currTopic, position))
-            // {
-            //     position = Random.Range(0f, 36f);
-            // }
-
             float angle = position * 10f;
             float angleRad = angle * Mathf.Deg2Rad;
 
-            Vector3 pos = new Vector3(
-                Mathf.Cos(angleRad) * 8f,
-                0f,
-                Mathf.Sin(angleRad) * 8f
-            );
+            Vector3 pos = new Vector3(Mathf.Cos(angleRad) * 8f, 0f, Mathf.Sin(angleRad) * 8f);
+            
+            destination = groupPosition + pos;
 
-            transform.position = Vector3.Lerp(transform.position, groupPosition + pos, Time.deltaTime * 0.5f);
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(groupPosition), Time.deltaTime * 0.5f);
-            //playerAnimation.Play("Walk");
+            state = NPCState.MOVING;
+        }
+    }
+    
+    /// <summary>
+    /// Gets the character's interest level in their current topic.
+    /// </summary>
+    /// <returns>The interest level, or 0 if no topic is set.</returns>
+    int GetCurrentInterestLevel()
+    {
+        if (string.IsNullOrEmpty(currTopic))
+        {
+            return 0;
+        }
+        foreach (var interest in interests)
+        {
+            if (interest.interestName == currTopic)
+            {
+                return interest.interestLevel;
+            }
+        }
+        return 0; // Should not happen if data is consistent, but a safe fallback.
+    }
+
+
+    /// <summary>
+    /// This is the "legs". It runs every frame ONLY when in the MOVING state.
+    /// </summary>
+    void PerformMovement()
+    {
+        if (Vector3.Distance(transform.position, destination) < 0.1f)
+        {
+            state = NPCState.PARTICIPATING;
+            return;
+        }
+        
+        transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
+        Vector3 groupCenter = groups.GetGroupPosition(currTopic);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(groupCenter - transform.position), moveSpeed * Time.deltaTime);
+    }
+
+    // --- Your other methods remain the same ---
+    public void LoadNPCData()
+    {
+        TextAsset jsonFile = Resources.Load<TextAsset>("CharacterData/npcs");
+        if (jsonFile == null) { Debug.LogError("npcs.json not found in Resources!"); return; }
+        NPCDataList npcDataList = JsonUtility.FromJson<NPCDataList>(jsonFile.text);
+        foreach (var data in npcDataList.npcList)
+        {
+            if (data.id == npcID)
+            {
+                description = data.description; dislikes = data.dislikes; likes = data.likes; interests = data.interests; relations = data.relations;
+                return;
+            }
         }
     }
 
-
-    /// <summary>
-    /// Broadcasts a message to other characters in the group.
-    /// </summary>
     public void Broadcast(string message)
     {
-        //Debug.Log($"{npcID} broadcasts: {message}");
-        // Here you can implement the logic to send the message to other characters in the group
         textBubble.text = message;
-        //execute ADD interest function
         AddInterest(20);
     }
 
-    /// <summary>
-    /// Data structure for holding a list of NPC data.
-    /// </summary>
-    [System.Serializable]
-    public class NPCDataList
-    {
-        public NPCData[] npcList;
-    }
-
-    /// <summary>
-    /// Data structure for holding individual NPC data.
-    /// </summary>
-    [System.Serializable]
-    public class NPCData
-    {
-        public string id;
-        public string description;
-        public string[] dislikes;
-        public string[] likes;
-        public Interests[] interests;
-        public Relation[] relations;
-    }
-
-    /// <summary>
-    /// Data structure for holding interests and their levels.
-    /// </summary>
-    [System.Serializable]
-    public class Interests
-    {
-        public string interestName;
-        public int interestLevel;
-    }
-
-    /// <summary>
-    /// Data structure for holding relations and their levels.
-    /// </summary>
-    [System.Serializable]
-    public class Relation
-    {
-        public string relationName;
-        public int relationLevel;
-    }
+    [System.Serializable] public class NPCDataList { public NPCData[] npcList; }
+    [System.Serializable] public class NPCData { public string id; public string description; public string[] dislikes; public string[] likes; public Interests[] interests; public Relation[] relations; }
+    [System.Serializable] public class Interests { public string interestName; public int interestLevel; }
+    [System.Serializable] public class Relation { public string relationName; public int relationLevel; }
 
     private void AddInterest(int val)
     {
         foreach (var interest in interests)
-        {
             if (interest.interestName == currTopic && interest.interestLevel <= (100 - val))
-            {
                 interest.interestLevel += val;
-            }
-        }
     }
+
     private void DecreaseInterest(int val)
     {
         foreach (var interest in interests)
-        {
             if (interest.interestName == currTopic && interest.interestLevel >= val)
-            {
                 interest.interestLevel -= val;
-            }
-        }
     }
 
     IEnumerator InterestReducer()
     {
         while (true)
         {
-            DecreaseInterest(5);
             yield return new WaitForSecondsRealtime(10f);
+            DecreaseInterest(5);
         }
-
     }
-
+    
 }
