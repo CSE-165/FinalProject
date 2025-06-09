@@ -9,15 +9,10 @@ public class Group : MonoBehaviour
 {
 
     [Header("Loaded Group Data")]
-    public string[] topics;
-
+    public GroupData[] groupData;
 
     [Header("Group Position")]
     public GameObject[] groupPosition;
-
-
-    [Header("NPC's In This Group")]
-    public GroupData[] groupData;
 
     [Header("Utilities")]
     public GeminiAPI geminiAI;
@@ -25,6 +20,7 @@ public class Group : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+        groupData = new GroupData[4]; // Initialize with an empty array
         LoadGroupData();
 
         // if (groupPosition.Length != topics.Length)
@@ -46,7 +42,17 @@ public class Group : MonoBehaviour
             return;
         }
 
-        topics = JsonUtility.FromJson<TopicData>(jsonFile.text).topics;
+        string[] topics = JsonUtility.FromJson<TopicData>(jsonFile.text).topics;
+
+        for(int i = 0; i < topics.Length; i++)
+        {
+            groupData[i] = new GroupData
+            {
+                topic = topics[i],
+                characters = new List<Character>(),
+                //conversationHistory = new List<ConversationTurn>()
+            };
+        }
         return;
     }
 
@@ -69,9 +75,7 @@ public class Group : MonoBehaviour
         {
             if (group.topic == topic)
             {
-                List<Character> characterList = new List<Character>(group.characters);
-                characterList.Add(character);
-                group.characters = characterList.ToArray();
+                group.characters.Add(character);
                 return;
             }
         }
@@ -90,9 +94,7 @@ public class Group : MonoBehaviour
         {
             if (group.topic == topic)
             {
-                List<Character> characterList = new List<Character>(group.characters);
-                characterList.Remove(character);
-                group.characters = characterList.ToArray();
+                group.characters.Remove(character);
                 return;
             }
         }
@@ -105,7 +107,23 @@ public class Group : MonoBehaviour
     /// </summary>
     public Vector3 GetGroupPosition(string topic)
     {
-        return groupPosition[System.Array.IndexOf(topics, topic)].transform.position;
+        for (int i = 0; i < groupData.Length; i++)
+        {
+            if (groupData[i].topic == topic)
+            {
+                if (i < groupPosition.Length)
+                {
+                    return groupPosition[i].transform.position;
+                }
+                else
+                {
+                    Debug.LogError($"Group position for topic '{topic}' not found.");
+                    return Vector3.zero;
+                }
+            }
+        }
+        
+        return Vector3.zero; // Return zero vector if topic not found
     }
 
     /// <summary>
@@ -169,7 +187,7 @@ public class Group : MonoBehaviour
     public class GroupData
     {
         public string topic;
-        public Character[] characters;
+        public List<Character> characters;
         public List<ConversationTurn> conversationHistory = new List<ConversationTurn>();
     }
 
