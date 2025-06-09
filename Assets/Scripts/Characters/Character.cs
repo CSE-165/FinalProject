@@ -33,7 +33,7 @@ public class Character : MonoBehaviour
     private bool active = false; // Indicates if the character is active in the game
 
     private Vector3 destination; //If NPC decides to move, destination.
-    private float thinkingTimer, timeToThink, moveSpeed, interestThreshold, npcInterestLevel = 10;
+    private float thinkingTimer, timeToThink, moveSpeed;
     public enum NPCState
     {
         PARTICIPATING,    // In a group and content for now.
@@ -44,6 +44,8 @@ public class Character : MonoBehaviour
     public void Start()
     {
         LoadNPCData();
+        Broadcast("hi my name sophie");
+        StartCoroutine(InterestReducer());
     }
 
     public void Update()
@@ -57,7 +59,7 @@ public class Character : MonoBehaviour
         switch (state)
         {
             case NPCState.PARTICIPATING:
-                
+
                 break;
 
             case NPCState.MOVING:
@@ -133,7 +135,7 @@ public class Character : MonoBehaviour
 
             Vector3 pos = new Vector3(
                 Mathf.Cos(angleRad) * 8f,
-                0f, 
+                0f,
                 Mathf.Sin(angleRad) * 8f
             );
 
@@ -152,6 +154,8 @@ public class Character : MonoBehaviour
         Debug.Log($"{npcID} broadcasts: {message}");
         // Here you can implement the logic to send the message to other characters in the group
         textBubble.text = message;
+        //execute ADD interest function
+        AddInterest(20);
     }
 
     /// <summary>
@@ -195,6 +199,37 @@ public class Character : MonoBehaviour
     {
         public string relationName;
         public int relationLevel;
+    }
+
+    private void AddInterest(int val)
+    {
+        foreach (var interest in interests)
+        {
+            if (interest.interestName == currTopic && interest.interestLevel <= (100 - val))
+            {
+                interest.interestLevel += val;
+            }
+        }
+    }
+    private void DecreaseInterest(int val)
+    {
+        foreach (var interest in interests)
+        {
+            if (interest.interestName == currTopic && interest.interestLevel >= val)
+            {
+                interest.interestLevel -= val;
+            }
+        }
+    }
+
+    IEnumerator InterestReducer()
+    {
+        while (true)
+        {
+            DecreaseInterest(5);
+            yield return new WaitForSecondsRealtime(10f);
+        }
+
     }
 
 }
