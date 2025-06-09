@@ -117,8 +117,8 @@ public class Character : MonoBehaviour
             float angle = position * 10f;
             float angleRad = angle * Mathf.Deg2Rad;
 
-            Vector3 pos = new Vector3(Mathf.Cos(angleRad) * 8f, 0f, Mathf.Sin(angleRad) * 8f);
-            
+            Vector3 pos = new Vector3(Mathf.Cos(angleRad) * 3f, 0f, Mathf.Sin(angleRad) * 3f);
+            groupPosition.y = 0f;
             destination = groupPosition + pos;
 
             state = NPCState.MOVING;
@@ -162,7 +162,9 @@ public class Character : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(groupCenter - transform.position), moveSpeed * Time.deltaTime);
     }
 
-    // --- Your other methods remain the same ---
+    /// <summary>
+    /// Loads NPC data from a JSON file located in the Resources folder.
+    /// </summary>
     public void LoadNPCData()
     {
         TextAsset jsonFile = Resources.Load<TextAsset>("CharacterData/npcs");
@@ -178,6 +180,10 @@ public class Character : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Broadcasts a message to the NPC's text bubble and increases interest in the current topic.
+    /// </summary>
+    /// <param name="message">The message to display in the text bubble.</param>
     public void Broadcast(string message)
     {
         textBubble.text = message;
