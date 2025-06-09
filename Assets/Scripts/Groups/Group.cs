@@ -18,6 +18,7 @@ public class Group : MonoBehaviour
     [Header("Utilities")]
     public GeminiAPI geminiAI;
 
+    private Character[] allCharacters;
     public PromptManager promptManager;
 
     // Start is called before the first frame update
@@ -38,6 +39,15 @@ public class Group : MonoBehaviour
         // }
 
     }
+    
+    public Character[] GetAllCharacters()
+    {
+        if (allCharacters == null || allCharacters.Length == 0)
+        {
+            allCharacters = FindObjectsOfType<Character>();
+        }
+        return allCharacters;
+    }
 
     /// <summary>
     /// Loads group data from a JSON file located in the Resources folder.
@@ -53,7 +63,7 @@ public class Group : MonoBehaviour
 
         string[] topics = JsonUtility.FromJson<TopicData>(jsonFile.text).topics;
 
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             groupData[i] = new GroupData
             {
