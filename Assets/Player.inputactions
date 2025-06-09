@@ -39,7 +39,7 @@
                 {
                     "name": "up",
                     "id": "6bdb0cbe-0eeb-4b00-9107-2a8b867e0998",
-                    "path": "",
+                    "path": "<OculusTouchController>{LeftHand}/thumbstick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -50,7 +50,7 @@
                 {
                     "name": "down",
                     "id": "1acb8ed8-e91d-456f-b1e5-64614e166a01",
-                    "path": "",
+                    "path": "<OculusTouchController>{LeftHand}/thumbstick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -61,7 +61,7 @@
                 {
                     "name": "left",
                     "id": "9cf97e65-ca6b-4713-8820-c44f31061de6",
-                    "path": "",
+                    "path": "<OculusTouchController>{LeftHand}/thumbstick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -72,7 +72,7 @@
                 {
                     "name": "right",
                     "id": "2e825a0c-34ec-4808-8648-639d1b427b29",
-                    "path": "",
+                    "path": "<OculusTouchController>{LeftHand}/thumbstick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -94,7 +94,7 @@
                 {
                     "name": "up",
                     "id": "c3709e1c-f3c9-4a7f-878e-e83e2207c0fc",
-                    "path": "",
+                    "path": "<OculusTouchController>{RightHand}/thumbstick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -105,7 +105,7 @@
                 {
                     "name": "down",
                     "id": "64362cf3-d9bf-4fc1-8a19-7507a44034ee",
-                    "path": "",
+                    "path": "<OculusTouchController>{RightHand}/thumbstick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -116,7 +116,7 @@
                 {
                     "name": "left",
                     "id": "0fa8f2a4-0418-4a59-b269-71c163fa6631",
-                    "path": "",
+                    "path": "<OculusTouchController>{RightHand}/thumbstick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -127,7 +127,7 @@
                 {
                     "name": "right",
                     "id": "b9985a7b-f670-4323-814b-928304fce3e1",
-                    "path": "",
+                    "path": "<OculusTouchController>{RightHand}/thumbstick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

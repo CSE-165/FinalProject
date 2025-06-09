@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -25,7 +26,11 @@ public class Group : MonoBehaviour
         groupData = new GroupData[4]; // Initialize with an empty array
         LoadGroupData();
 
-
+        foreach (var EachGroupData in groupData)
+        {
+            promptManager.GenerateMultiTurnConversation(EachGroupData);
+        }
+        
         
         // if (groupPosition.Length != topics.Length)
         // {
@@ -54,7 +59,7 @@ public class Group : MonoBehaviour
             {
                 topic = topics[i],
                 characters = new List<Character>(),
-                //conversationHistory = new List<ConversationTurn>()
+                conversationHistory = new List<ConversationTurn>()
             };
         }
         return;
