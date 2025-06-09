@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -15,16 +14,13 @@ public class GeminiAPI : MonoBehaviour
     private void Start()
     {
         apiKey = ConfigManager.Config.apiKey;
-
+        
         if (string.IsNullOrEmpty(apiKey))
         {
             Debug.LogError("API Key is missing! Please check your config.");
         }
     }
 
-    /// <summary>
-    /// Sends a prompt to Gemini and returns the LLM's response via callback.
-    /// </summary>
     public void SendPrompt(string prompt, Action<string> onResponse)
     {
         StartCoroutine(SendPromptCoroutine(prompt, onResponse));
@@ -33,7 +29,8 @@ public class GeminiAPI : MonoBehaviour
     private IEnumerator SendPromptCoroutine(string prompt, Action<string> onResponse)
     {
         string fullUrl = apiUrl + apiKey;
-
+        
+        // Create the JSON body for the request
         string jsonBody = $@"
         {{
             ""contents"": [
@@ -58,31 +55,19 @@ public class GeminiAPI : MonoBehaviour
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                string rawJson = request.downloadHandler.text;
-
-                // Extract response text
-                string messageText = ExtractTextFromResponse(rawJson);
-                onResponse?.Invoke(messageText);
+                onResponse?.Invoke(request.downloadHandler.text);
             }
             else
             {
-                Debug.LogError("Error: " + request.error + " | Response: " + request.downloadHandler.text);
-                onResponse?.Invoke(null);
+                onResponse?.Invoke($"Error: {request.error} | Response: {request.downloadHandler.text}");
             }
         }
     }
 
     private string EscapeJsonString(string input)
     {
-        return input.Replace("\\", "\\\\")
-                    .Replace("\"", "\\\"")
-                    .Replace("\n", "\\n")
-                    .Replace("\r", "\\r");
+        return input.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r");
     }
 
-    private string ExtractTextFromResponse(string json)
-    {
-        string x = "need to parse text{} in Gemini json response into string";
-        return x;
-    }
+
 }
