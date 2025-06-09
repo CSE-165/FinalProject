@@ -44,7 +44,7 @@ public class Group : MonoBehaviour
 
         string[] topics = JsonUtility.FromJson<TopicData>(jsonFile.text).topics;
 
-        for(int i = 0; i < topics.Length; i++)
+        for(int i = 0; i < 4; i++)
         {
             groupData[i] = new GroupData
             {

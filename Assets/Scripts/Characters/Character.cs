@@ -49,22 +49,22 @@ public class Character : MonoBehaviour
 
     public void Update()
     {
-        if (!active)
-        {
-            return;
-        }
+        // if (!active)
+        // {
+        //     return;
+        // }
         Pathing();
 
-        switch (state)
-        {
-            case NPCState.PARTICIPATING:
+        // switch (state)
+        // {
+        //     case NPCState.PARTICIPATING:
 
-                break;
+        //         break;
 
-            case NPCState.MOVING:
+        //     case NPCState.MOVING:
 
-                break;
-        }
+        //         break;
+        // }
     }
 
     /// <summary>
@@ -106,12 +106,15 @@ public class Character : MonoBehaviour
         string topic = "";
 
         // Checks for current max interest level.
-        foreach (var interest in interests)
+        foreach (var group in groups.groupData)
         {
-            if (interest.interestLevel > maxValue)
+            foreach (var interest in interests)
             {
-                maxValue = interest.interestLevel;
-                topic = interest.interestName;
+                if (interest.interestName == group.topic && interest.interestLevel > maxValue)
+                {
+                    maxValue = interest.interestLevel;
+                    topic = group.topic;
+                }
             }
         }
         // If new max interest topic is found, update the current topic and move character.
@@ -124,10 +127,10 @@ public class Character : MonoBehaviour
 
             position = Random.Range(0f, 36f);
 
-            while (!groups.CheckCharacterPosition(currTopic, position))
-            {
-                position = Random.Range(0f, 36f);
-            }
+            // while (!groups.CheckCharacterPosition(currTopic, position))
+            // {
+            //     position = Random.Range(0f, 36f);
+            // }
 
             float angle = position * 10f;
             float angleRad = angle * Mathf.Deg2Rad;
