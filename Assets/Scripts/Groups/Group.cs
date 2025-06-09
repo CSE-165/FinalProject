@@ -56,6 +56,18 @@ public class Group : MonoBehaviour
         return;
     }
 
+    public void ChangeGroupTopic(int index, string newTopic)
+    {
+        if (index < 0 || index >= groupData.Length)
+        {
+            Debug.LogError("Index out of bounds for group data.");
+            return;
+        }
+
+        groupData[index].topic = newTopic;
+        Debug.Log($"Group topic changed to {newTopic} at index {index}.");
+    }
+
     /// <summary>
     /// Sends a prompt to the Gemini API for the specified topic.
     /// </summary>
