@@ -25,16 +25,13 @@ public class Group : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        groupData = new GroupData[1];
-        groupData[0].topic = "fishing";
-        //LoadGroupData();
+        LoadGroupData();
 
         // if (groupPosition.Length != topics.Length)
         // {
         //     Debug.LogError("Group positions and topics count mismatch!");
         // }
 
-        SendMessageToNPC("fishing", "hello sophie do you like fishing?", "Sophie");
     }
 
     /// <summary>
@@ -42,14 +39,15 @@ public class Group : MonoBehaviour
     /// </summary>
     public void LoadGroupData()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("GroupData/topics.json");
+        TextAsset jsonFile = Resources.Load<TextAsset>("GroupData/topics");
         if (jsonFile == null)
         {
             Debug.LogError("topics.json not found in Resources!");
             return;
         }
 
-        topics = JsonUtility.FromJson<string[]>(jsonFile.text);
+        topics = JsonUtility.FromJson<TopicData>(jsonFile.text).topics;
+        return;
     }
 
     /// <summary>
@@ -159,7 +157,7 @@ public class Group : MonoBehaviour
 
     /// <summary>
     /// Data structure for holding a list of group data.
-    /// /// </summary>
+    /// </summary>
     public class GroupDataList
     {
         public GroupData[] groupList;
@@ -173,6 +171,11 @@ public class Group : MonoBehaviour
         public string topic;
         public Character[] characters;
         public List<ConversationTurn> conversationHistory = new List<ConversationTurn>();
+    }
+
+    public class TopicData
+    {
+        public string[] topics;
     }
 
 }

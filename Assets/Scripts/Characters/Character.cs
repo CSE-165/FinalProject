@@ -44,7 +44,6 @@ public class Character : MonoBehaviour
     public void Start()
     {
         LoadNPCData();
-        Broadcast("hi my name sophie");
     }
 
     public void Update()
@@ -72,7 +71,7 @@ public class Character : MonoBehaviour
     /// </summary>
     public void LoadNPCData()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("CharacterData/npcs.json");
+        TextAsset jsonFile = Resources.Load<TextAsset>("CharacterData/npcs");
         if (jsonFile == null)
         {
             Debug.LogError("npcs.json not found in Resources!");
@@ -80,6 +79,7 @@ public class Character : MonoBehaviour
         }
 
         NPCDataList npcDataList = JsonUtility.FromJson<NPCDataList>(jsonFile.text);
+       
         foreach (var data in npcDataList.npcList)
         {
             if (data.id == npcID)
@@ -157,6 +157,7 @@ public class Character : MonoBehaviour
     /// <summary>
     /// Data structure for holding a list of NPC data.
     /// </summary>
+    [System.Serializable]
     public class NPCDataList
     {
         public NPCData[] npcList;
@@ -165,6 +166,7 @@ public class Character : MonoBehaviour
     /// <summary>
     /// Data structure for holding individual NPC data.
     /// </summary>
+    [System.Serializable]
     public class NPCData
     {
         public string id;
@@ -178,6 +180,7 @@ public class Character : MonoBehaviour
     /// <summary>
     /// Data structure for holding interests and their levels.
     /// </summary>
+    [System.Serializable]
     public class Interests
     {
         public string interestName;
@@ -187,6 +190,7 @@ public class Character : MonoBehaviour
     /// <summary>
     /// Data structure for holding relations and their levels.
     /// </summary>
+    [System.Serializable]
     public class Relation
     {
         public string relationName;
