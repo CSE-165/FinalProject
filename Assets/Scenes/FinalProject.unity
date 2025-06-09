@@ -248,7 +248,9 @@ MonoBehaviour:
   currTopic: 
   playerAnimation: {fileID: 0}
   position: 0
-  textBubble: {fileID: 0}
+  textBubble: {fileID: 1856142086}
+  moveSpeed: 3
+  interestThreshold: 10
 --- !u!4 &17104240 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 36d09c20a250cab438b626dabef27979, type: 3}
@@ -266,7 +268,7 @@ GameObject:
   - component: {fileID: 37900261}
   - component: {fileID: 37900260}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SophieText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -758,6 +760,8 @@ MonoBehaviour:
   playerAnimation: {fileID: 0}
   position: 0
   textBubble: {fileID: 0}
+  moveSpeed: 3
+  interestThreshold: 10
 --- !u!1001 &595041976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -850,6 +854,8 @@ MonoBehaviour:
   playerAnimation: {fileID: 0}
   position: 0
   textBubble: {fileID: 0}
+  moveSpeed: 3
+  interestThreshold: 10
 --- !u!1 &616208670
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,7 +1033,7 @@ GameObject:
   - component: {fileID: 674542440}
   - component: {fileID: 674542439}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: RemyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2008,6 +2014,8 @@ MonoBehaviour:
   playerAnimation: {fileID: 0}
   position: 0
   textBubble: {fileID: 0}
+  moveSpeed: 3
+  interestThreshold: 10
 --- !u!1001 &811630760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2108,6 +2116,8 @@ MonoBehaviour:
   playerAnimation: {fileID: 0}
   position: 0
   textBubble: {fileID: 0}
+  moveSpeed: 3
+  interestThreshold: 10
 --- !u!1 &818687460
 GameObject:
   m_ObjectHideFlags: 0
@@ -2804,6 +2814,8 @@ MonoBehaviour:
   playerAnimation: {fileID: 0}
   position: 0
   textBubble: {fileID: 37900260}
+  moveSpeed: 3
+  interestThreshold: 10
 --- !u!1 &1555849242
 GameObject:
   m_ObjectHideFlags: 0
@@ -3188,7 +3200,9 @@ MonoBehaviour:
   currTopic: 
   playerAnimation: {fileID: 0}
   position: 0
-  textBubble: {fileID: 0}
+  textBubble: {fileID: 674542439}
+  moveSpeed: 3
+  interestThreshold: 10
 --- !u!4 &1683139793 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2bd79451dce07664b8da431fefd4a014, type: 3}
@@ -4316,7 +4330,7 @@ GameObject:
   - component: {fileID: 1856142087}
   - component: {fileID: 1856142086}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: LeonardText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4533,6 +4547,8 @@ MonoBehaviour:
   playerAnimation: {fileID: 0}
   position: 0
   textBubble: {fileID: 0}
+  moveSpeed: 3
+  interestThreshold: 10
 --- !u!1 &2039214738
 GameObject:
   m_ObjectHideFlags: 0
