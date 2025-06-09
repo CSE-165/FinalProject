@@ -33,22 +33,24 @@ public class PromptManager : MonoBehaviour
         }
 
         // Send prompt to Gemini and handle response
-        geminiAPI.SendPrompt(prompt, (response) =>
+        geminiAPI.SendPrompt(prompt, (responseJson) =>
         {
             // Parse Gemini's response into a list of turns
-            List<ConversationTurn> turns = ParseMultiTurnResponse(response);
+            //Debug.Log("<color=cyan>RAW Gemini Response:</color>\n" + responseJson);
+            List<ConversationTurn> turns = ParseMultiTurnResponse(responseJson);
 
             // Loop through each generated turn
             foreach (var turn in turns)
             {
                 // Find the NPC who matches the speaker name
+                Debug.Log($"NPC {turn.speaker} says: {turn.message}");
                 Character speaker = groupData.characters.FirstOrDefault(c => c.npcID == turn.speaker);
                 if (speaker != null)
                 {
                     // Make the character speak and update conversation history
                     speaker.Broadcast(turn.message); // Broadcast NPC message
                     groupData.conversationHistory.Add(turn);
-                    Debug.Log($"NPC {turn.speaker} says: {turn.message}");
+                    //Debug.Log($"NPC {turn.speaker} says: {turn.message}");
                 }
                 else
                 {
@@ -86,7 +88,7 @@ public class PromptManager : MonoBehaviour
             string relations = (npc.relations != null && npc.relations.Length > 0)
                 ? string.Join(", ", npc.relations.Select(r => $"{r.relationName} ({r.relationLevel:+#;-#;0})"))
                 : "None";
-            
+
             // Append NPC details to prompt
             prompt.AppendLine($"- {npc.npcID}");
             prompt.AppendLine($"  Description: {npc.description}");
@@ -171,4 +173,6 @@ public class PromptManager : MonoBehaviour
         return turns;
     }
 
+
 }
+

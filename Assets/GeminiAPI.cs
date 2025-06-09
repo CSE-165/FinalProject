@@ -6,15 +6,16 @@ using System;
 
 public class GeminiAPI : MonoBehaviour
 {
-    
-    private string apiKey;  //Replace this with your Gemini API Key
 
-    private string apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
+    //private string apiKey;  //Replace this with your Gemini API Key
+
+    private string apiKey = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBF-msufz-5X0Rka-dPTvLR3r_icyMonPY";
 
     private void Start()
     {
-        apiKey = ConfigManager.Config.apiKey;
-        
+        //apiKey = ConfigManager.Config.apiKey;
+        //Debug.Log(apiKey);
+
         if (string.IsNullOrEmpty(apiKey))
         {
             Debug.LogError("API Key is missing! Please check your config.");
@@ -24,12 +25,14 @@ public class GeminiAPI : MonoBehaviour
     public void SendPrompt(string prompt, Action<string> onResponse)
     {
         StartCoroutine(SendPromptCoroutine(prompt, onResponse));
+        Debug.Log("Sending prompt to Gemini:\n" + prompt);
     }
 
     private IEnumerator SendPromptCoroutine(string prompt, Action<string> onResponse)
     {
-        string fullUrl = apiUrl + apiKey;
-        
+        string fullUrl = apiKey;
+        //Debug.Log(fullUrl);
+
         // Create the JSON body for the request
         string jsonBody = $@"
         {{
@@ -55,7 +58,13 @@ public class GeminiAPI : MonoBehaviour
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                onResponse?.Invoke(request.downloadHandler.text);
+                string rawJson = request.downloadHandler.text;
+                //Debug.Log("Full Gemini JSON Response:\n" + rawJson);
+
+                string messageText = ExtractTextFromResponse(rawJson);
+                Debug.Log("Parsed Gemini Message:\n" + messageText);
+
+                onResponse?.Invoke(messageText);
             }
             else
             {
@@ -67,6 +76,44 @@ public class GeminiAPI : MonoBehaviour
     private string EscapeJsonString(string input)
     {
         return input.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r");
+    }
+
+    private string ExtractTextFromResponse(string rawJson)
+    {
+        GeminiResponse parsed = JsonUtility.FromJson<GeminiResponse>(rawJson);
+
+        if (parsed != null && parsed.candidates.Length > 0 &&
+            parsed.candidates[0].content != null &&
+            parsed.candidates[0].content.parts.Length > 0)
+        {
+            return parsed.candidates[0].content.parts[0].text;
+        }
+
+        return "[Failed to parse Gemini response]";
+    }
+    
+    [System.Serializable]
+    public class GeminiResponse
+    {
+        public Candidate[] candidates;
+    }
+
+    [System.Serializable]
+    public class Candidate
+    {
+        public Content content;
+    }
+
+    [System.Serializable]
+    public class Content
+    {
+        public Part[] parts;
+    }
+
+    [System.Serializable]
+    public class Part
+    {
+        public string text;
     }
 
 

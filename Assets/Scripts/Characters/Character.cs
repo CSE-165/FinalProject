@@ -53,7 +53,7 @@ public class Character : MonoBehaviour
         // {
         //     return;
         // }
-        Pathing();
+        //Pathing();
 
         // switch (state)
         // {
@@ -153,7 +153,7 @@ public class Character : MonoBehaviour
     /// </summary>
     public void Broadcast(string message)
     {
-        Debug.Log($"{npcID} broadcasts: {message}");
+        //Debug.Log($"{npcID} broadcasts: {message}");
         // Here you can implement the logic to send the message to other characters in the group
         textBubble.text = message;
         //execute ADD interest function
