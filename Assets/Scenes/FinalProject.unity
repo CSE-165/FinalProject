@@ -238,10 +238,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1d1caee98560142ac50adfb59000d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcID: 
+  npcID: Leonard
   description: 
+  interests: []
   dislikes: []
   likes: []
+  relations: []
   groups: {fileID: 0}
   currTopic: 
   playerAnimation: {fileID: 0}
@@ -745,10 +747,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1d1caee98560142ac50adfb59000d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcID: 
+  npcID: Elizabeth
   description: 
+  interests: []
   dislikes: []
   likes: []
+  relations: []
   groups: {fileID: 0}
   currTopic: 
   playerAnimation: {fileID: 0}
@@ -835,10 +839,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1d1caee98560142ac50adfb59000d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcID: 
+  npcID: Suzie
   description: 
+  interests: []
   dislikes: []
   likes: []
+  relations: []
   groups: {fileID: 0}
   currTopic: 
   playerAnimation: {fileID: 0}
@@ -1991,10 +1997,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1d1caee98560142ac50adfb59000d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcID: 
+  npcID: Megan
   description: 
+  interests: []
   dislikes: []
   likes: []
+  relations: []
   groups: {fileID: 0}
   currTopic: 
   playerAnimation: {fileID: 0}
@@ -2089,10 +2097,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1d1caee98560142ac50adfb59000d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcID: 
+  npcID: David
   description: 
+  interests: []
   dislikes: []
   likes: []
+  relations: []
   groups: {fileID: 0}
   currTopic: 
   playerAnimation: {fileID: 0}
@@ -2109,7 +2119,6 @@ GameObject:
   - component: {fileID: 818687463}
   - component: {fileID: 818687462}
   - component: {fileID: 818687461}
-  - component: {fileID: 818687464}
   m_Layer: 0
   m_Name: GeminiAPI
   m_TagString: Untagged
@@ -2156,19 +2165,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &818687464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 818687460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05a03a342f7ce05418d2a5145432d1bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  geminiAPI: {fileID: 818687462}
 --- !u!1 &852320749
 GameObject:
   m_ObjectHideFlags: 0
@@ -2705,8 +2701,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcID: Sophie
   description: 
+  interests: []
   dislikes: []
   likes: []
+  relations: []
   groups: {fileID: 0}
   currTopic: 
   playerAnimation: {fileID: 0}
@@ -2743,11 +2741,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topics: []
   groupPosition:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  geminiAI: {fileID: 0}
+  - {fileID: 905155493}
+  - {fileID: 679108999}
+  - {fileID: 81520023}
+  - {fileID: 1606451472}
+  geminiAI: {fileID: 818687462}
 --- !u!4 &1555849244
 Transform:
   m_ObjectHideFlags: 0
@@ -3086,10 +3084,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1d1caee98560142ac50adfb59000d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcID: 
+  npcID: Remy
   description: 
+  interests: []
   dislikes: []
   likes: []
+  relations: []
   groups: {fileID: 0}
   currTopic: 
   playerAnimation: {fileID: 0}
@@ -3315,6 +3315,7 @@ GameObject:
   - component: {fileID: 1706948864}
   - component: {fileID: 1706948867}
   - component: {fileID: 1706948868}
+  - component: {fileID: 1706948869}
   m_Layer: 0
   m_Name: XR Origin (XR Rig)
   m_TagString: Untagged
@@ -3361,7 +3362,7 @@ Transform:
   m_GameObject: {fileID: 1706948863}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3434,6 +3435,27 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!65 &1706948869
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706948863}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1847214115
 GameObject:
   m_ObjectHideFlags: 0
@@ -4406,10 +4428,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1d1caee98560142ac50adfb59000d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcID: 
+  npcID: Bryce
   description: 
+  interests: []
   dislikes: []
   likes: []
+  relations: []
   groups: {fileID: 0}
   currTopic: 
   playerAnimation: {fileID: 0}

@@ -44,7 +44,6 @@ public class Character : MonoBehaviour
     public void Start()
     {
         LoadNPCData();
-        Broadcast("hi my name sophie");
         StartCoroutine(InterestReducer());
     }
 
@@ -54,7 +53,7 @@ public class Character : MonoBehaviour
         {
             return;
         }
-        //Pathing();
+        Pathing();
 
         switch (state)
         {
