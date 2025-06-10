@@ -206,7 +206,7 @@ public class Character : MonoBehaviour
         anim.SetBool("talking", true);
         anim.SetBool("listening", false);
         anim.SetBool("walking", false);
-        AddInterest(20, currTopic);
+        AddInterest(10, currTopic);
         Invoke("TalkingFalse", Random.Range(4f, 10f));
 
         textBubble.text = "";
@@ -254,7 +254,7 @@ public class Character : MonoBehaviour
         while (true)
         {
             yield return new WaitForSecondsRealtime(10f);
-            DecreaseInterest(5);
+            DecreaseInterest(8);
         }
     }
 
@@ -267,7 +267,7 @@ public class Character : MonoBehaviour
             foreach (string topic in topics)
             {
                 if (currTopic == topic) continue; // Skip the current topic
-                AddInterest(4, topic);
+                AddInterest(3, topic);
             }
         }
     }
