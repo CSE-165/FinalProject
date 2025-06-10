@@ -33,6 +33,7 @@ public class Character : MonoBehaviour
     // --- State Machine ---
     private Vector3 destination;
     private NPCState state = NPCState.PARTICIPATING;
+    private bool isSpeaking = false;
     public enum NPCState
     {
         PARTICIPATING,    // Checking for better groups
@@ -79,6 +80,8 @@ public class Character : MonoBehaviour
     void DecideOnBestTopic()
     {
         if (groups.groupData == null) return;
+
+        if (isSpeaking) return;
 
         // --- NEW LOGIC: The "Boredom Check" ---
         // If the character is already in a group...
@@ -201,6 +204,8 @@ public class Character : MonoBehaviour
     /// <param name="message">The message to display in the text bubble.</param>
     public IEnumerator Broadcast(string message)
     {
+        isSpeaking = true;
+
         //set speaking flag true
         StartCoroutine(TextTimer()); // Start the text timer to clear the bubble after a while
         anim.SetBool("talking", true);
@@ -218,6 +223,9 @@ public class Character : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.05f); // Adjust typing speed here
         }
         textBubble.text = message; // Final message display
+
+        //
+        isSpeaking = false;
 
     }
 

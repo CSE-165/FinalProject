@@ -10,40 +10,65 @@ using UnityEngine;
 public class PromptManager : MonoBehaviour
 {
     public GeminiAPI geminiAPI; // Assign in the inspector 
+    private HashSet<string> runningGroups = new HashSet<string>();
 
-    /// <summary>
-    /// Generates a prompt based on the group's state and sends it to Gemini.
-    /// Parses and processes the response as conversation turns.
-    /// </summary>
-    /// <param name="groupData">Group containing NPCs and conversation history</param>
-    /// <param name="turnCount">Number of lines Gemini should generate</param>
-    public void GenerateMultiTurnConversation(Group.GroupData groupData, int turnCount = 10)
+    public void StartConversationLoop(Group.GroupData groupData, int turnsPerRound = 6, float delayBetweenRounds = 2f)
+    {
+        string groupID = groupData.topic;
+
+        if (runningGroups.Contains(groupID)) return;
+        runningGroups.Add(groupID);
+
+        StartCoroutine(ConversationLoopCoroutine(groupData, turnsPerRound, delayBetweenRounds));
+    }
+
+    private IEnumerator ConversationLoopCoroutine(Group.GroupData groupData, int turnsPerRound, float delayBetweenRounds)
+    {
+        while (true)
+        {
+            yield return GenerateAndPlayRound(groupData, turnsPerRound);
+            yield return new WaitForSecondsRealtime(delayBetweenRounds);
+        }
+    }
+
+    private IEnumerator GenerateAndPlayRound(Group.GroupData groupData, int turnCount)
     {
         string prompt;
 
-        // Decide whether this is the first conversation or a continuation
         if (groupData.conversationHistory == null || groupData.conversationHistory.Count == 0)
-        {
-            // If it's the first turn, generate the initial character info prompt
             prompt = GenerateInitialPrompt(groupData, turnCount);
-        }
         else
-        {
-            // Otherwise, continue from previous turns
             prompt = GenerateMultiTurnPrompt(groupData, turnCount);
-        }
 
-        // Send prompt to Gemini and handle response
+        bool responseReceived = false;
+        List<ConversationTurn> turns = new();
+
         geminiAPI.SendPrompt(prompt, (responseJson) =>
         {
-            // Parse Gemini's response into a list of turns
-            //Debug.Log("<color=cyan>RAW Gemini Response:</color>\n" + responseJson);
-            List<ConversationTurn> turns = ParseMultiTurnResponse(responseJson);
-
-            // Loop through each generated turn
-            StartCoroutine(SequentialBroadcast(turns, groupData));
+            turns = ParseMultiTurnResponse(responseJson);
+            responseReceived = true;
         });
+
+        yield return new WaitUntil(() => responseReceived);
+
+        foreach (var turn in turns)
+        {
+            Character speaker = groupData.characters.FirstOrDefault(c => c.npcID == turn.speaker);
+            if (speaker != null)
+            {
+                yield return speaker.StartCoroutine(speaker.Broadcast(turn.message));
+                groupData.conversationHistory.Add(turn);
+                Debug.Log($"NPC {speaker.npcID} says: {turn.message}");
+            }
+            else
+            {
+                Debug.LogWarning($"Speaker '{turn.speaker}' not found in group.");
+            }
+
+            yield return new WaitForSeconds(1f); // Optional gap between turns
+        }
     }
+
 
     private IEnumerator SequentialBroadcast(List<ConversationTurn> turns, Group.GroupData groupData)
     {
@@ -77,7 +102,7 @@ public class PromptManager : MonoBehaviour
         // Set up the scene and task
         prompt.AppendLine("You are simulating a group conversation. ");
         prompt.AppendLine($"The topic of discussion is: \"{groupData.topic}\"."); // The group topic
-        prompt.AppendLine("\nHere is detailed information about the NPCs involved in the conversation: (if there is just one npc or )\n");
+        prompt.AppendLine("\nHere is detailed information about the NPCs involved in the conversation: \n");
 
         // Add data about each NPC into the prompt
         foreach (Character npc in groupData.characters)
@@ -137,7 +162,7 @@ public class PromptManager : MonoBehaviour
         // Add most recent conversation lines as context
         prompt.AppendLine("\nRecent conversation turns:");
 
-        int recentCount = Mathf.Min(20, groupData.conversationHistory.Count); // Show last 20 lines of chat history or less if not enough
+        int recentCount = Mathf.Min(12, groupData.conversationHistory.Count); // Show last 12 lines of chat history or less if not enough
         for (int i = groupData.conversationHistory.Count - recentCount; i < groupData.conversationHistory.Count; i++)
         {
             var turn = groupData.conversationHistory[i];
@@ -176,6 +201,42 @@ public class PromptManager : MonoBehaviour
         }
 
         return turns;
+    }
+
+    /// <summary>
+    /// Generates a prompt based on the group's state and sends it to Gemini.
+    /// Parses and processes the response as conversation turns.
+    /// </summary>
+    /// <param name="groupData">Group containing NPCs and conversation history</param>
+    /// <param name="turnCount">Number of lines Gemini should generate</param>
+    /// 
+    [System.Obsolete("Use StartConversationLoop instead for auto rounds.")]
+    public void GenerateMultiTurnConversation(Group.GroupData groupData, int turnCount = 10)
+    {
+        string prompt;
+
+        // Decide whether this is the first conversation or a continuation
+        if (groupData.conversationHistory == null || groupData.conversationHistory.Count == 0)
+        {
+            // If it's the first turn, generate the initial character info prompt
+            prompt = GenerateInitialPrompt(groupData, turnCount);
+        }
+        else
+        {
+            // Otherwise, continue from previous turns
+            prompt = GenerateMultiTurnPrompt(groupData, turnCount);
+        }
+
+        // Send prompt to Gemini and handle response
+        geminiAPI.SendPrompt(prompt, (responseJson) =>
+        {
+            // Parse Gemini's response into a list of turns
+            //Debug.Log("<color=cyan>RAW Gemini Response:</color>\n" + responseJson);
+            List<ConversationTurn> turns = ParseMultiTurnResponse(responseJson);
+
+            // Loop through each generated turn
+            StartCoroutine(SequentialBroadcast(turns, groupData));
+        });
     }
 
 

@@ -86,7 +86,7 @@ public class Group : MonoBehaviour
         {
             if (EachGroupData.characters.Count > 1)
             {
-                promptManager.GenerateMultiTurnConversation(EachGroupData);
+                promptManager.StartConversationLoop(EachGroupData, turnsPerRound: 6, delayBetweenRounds: 0.1f);
             }
 
         }
@@ -160,6 +160,11 @@ public class Group : MonoBehaviour
             if (group.topic == topic)
             {
                 group.characters.Add(character);
+                if (group.characters.Count == 2) // exactly 2 (just crossed the threshold)
+                {
+                    promptManager.StartConversationLoop(group, turnsPerRound: 6, delayBetweenRounds: 2f);
+                    Debug.Log($" Started conversation loop for topic '{topic}' after 2 characters joined.");
+                }
                 return;
             }
         }
