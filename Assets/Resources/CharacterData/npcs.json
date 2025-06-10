@@ -90,7 +90,7 @@
     },
     {
       "id": "David",
-      "description": "David is a quiet and intellectual individual who enjoys chess and puzzles. He wears glasses and a navy blue sweater.",
+      "description": "David is a quiet and intellectual individual who enjoys chess and puzzles. He wears a black hoodie and athletic clothes.",
       "dislikes": ["loud noises", "interruptions"],
       "likes": ["chess", "solving puzzles"],
       "interests": [
@@ -112,7 +112,7 @@
     },
     {
       "id": "Suzie",
-      "description": "Suzie is an energetic teenager who loves video games and cosplay. She wears colorful clothing and carries a handheld console everywhere.",
+      "description": "Suzie is an energetic teenager who loves video games and cosplay. She carries a handheld console everywhere.",
       "dislikes": ["waiting", "boring conversations"],
       "likes": ["cosplay", "gaming", "anime"],
       "interests": [
@@ -134,7 +134,7 @@
     },
     {
       "id": "Bryce",
-      "description": "Bryce is a mechanic who is great with his hands but struggles to express his emotions. He’s usually in overalls and smells faintly of motor oil.",
+      "description": "Bryce is a mechanic who is great with his hands but struggles to express his emotions. He wears tattoos and smells faintly of motor oil.",
       "dislikes": ["dishonesty", "wasting time"],
       "likes": ["cars", "tinkering", "quiet places"],
       "interests": [
