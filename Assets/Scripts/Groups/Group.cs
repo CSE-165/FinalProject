@@ -24,14 +24,8 @@ public class Group : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        groupData = new GroupData[4]; // Initialize with an empty array
-        LoadGroupData();
-
-        foreach (var EachGroupData in groupData)
-        {
-            promptManager.GenerateMultiTurnConversation(EachGroupData);
-        }
-        
+        groupData = new GroupData[4];
+        StartCoroutine(InitializeAndStartPrompting());
         
         // if (groupPosition.Length != topics.Length)
         // {
@@ -39,6 +33,19 @@ public class Group : MonoBehaviour
         // }
 
     }
+
+    private IEnumerator InitializeAndStartPrompting()
+    {
+        LoadGroupData();
+        
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        foreach (var EachGroupData in groupData)
+        {
+            promptManager.GenerateMultiTurnConversation(EachGroupData);
+        }
+    }
+
     
     public Character[] GetAllCharacters()
     {

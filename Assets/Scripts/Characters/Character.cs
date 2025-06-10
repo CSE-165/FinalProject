@@ -69,6 +69,7 @@ public class Character : MonoBehaviour
     /// This is the "brain". It checks interests and decides if a move is needed.
     /// It runs every frame while in the PARTICIPATING state.
     /// </summary>
+    
     void DecideOnBestTopic()
     {
         if (groups.groupData == null) return;

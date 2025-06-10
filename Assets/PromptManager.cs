@@ -70,9 +70,9 @@ public class PromptManager : MonoBehaviour
         StringBuilder prompt = new StringBuilder();
 
         // Set up the scene and task
-        prompt.AppendLine("You are simulating a group conversation among AI-driven NPCs in a virtual environment.");
+        prompt.AppendLine("You are simulating a group conversation. ");
         prompt.AppendLine($"The topic of discussion is: \"{groupData.topic}\"."); // The group topic
-        prompt.AppendLine("\nHere is detailed information about the NPCs involved in the conversation:\n");
+        prompt.AppendLine("\nHere is detailed information about the NPCs involved in the conversation: (if there is just one npc or )\n");
 
         // Add data about each NPC into the prompt
         foreach (Character npc in groupData.characters)
