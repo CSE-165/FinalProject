@@ -67,6 +67,16 @@ public class Group : MonoBehaviour
         textBubble[index].text = message;
     }
 
+    public string[] GetGroupTopics()
+    {
+        string[] topics = new string[groupData.Length];
+        for (int i = 0; i < groupData.Length; i++)
+        {
+            topics[i] = groupData[i].topic;
+        }
+        return topics;
+    }
+    
     private IEnumerator InitializeAndStartPrompting()
     {
 

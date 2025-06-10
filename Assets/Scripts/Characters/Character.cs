@@ -43,6 +43,7 @@ public class Character : MonoBehaviour
     {
         LoadNPCData();
         StartCoroutine(InterestReducer());
+        StartCoroutine(InterestIncreaser());
         // The first Update() call will handle finding the initial group.
     }
 
@@ -67,6 +68,7 @@ public class Character : MonoBehaviour
         // rotate the canvas 180 degrees to face the camera
         canvas.transform.LookAt(Camera.main.transform);
         canvas.transform.rotation *= Quaternion.Euler(0f, 180f, 0f);
+
     }
 
     /// <summary>
@@ -204,7 +206,7 @@ public class Character : MonoBehaviour
         anim.SetBool("talking", true);
         anim.SetBool("listening", false);
         anim.SetBool("walking", false);
-        AddInterest(20);
+        AddInterest(20, currTopic);
         Invoke("TalkingFalse", Random.Range(4f, 10f));
 
         textBubble.text = "";
@@ -231,11 +233,13 @@ public class Character : MonoBehaviour
     [System.Serializable] public class Interests { public string interestName; public int interestLevel; }
     [System.Serializable] public class Relation { public string relationName; public int relationLevel; }
 
-    private void AddInterest(int val)
+    private void AddInterest(int val, string interest)
     {
         foreach (var interest in interests)
-            if (interest.interestName == currTopic && interest.interestLevel <= (100 - val))
+        {
+            if (interest.interestName == interest && interest.interestLevel <= (100 - val))
                 interest.interestLevel += val;
+        }
     }
 
     private void DecreaseInterest(int val)
@@ -251,6 +255,20 @@ public class Character : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(10f);
             DecreaseInterest(5);
+        }
+    }
+
+    IEnumerator InterestIncreaser()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(10f);
+            string[] topics = groups.GetGroupTopics();
+            foreach (string topic in topics)
+            {
+                if (currTopic == topic) continue; // Skip the current topic
+                AddInterest(4, topic);
+            }
         }
     }
 
