@@ -17,7 +17,42 @@ public class ProfileUi : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(Delay());
+        string likes = "Likes: ";
+        foreach (var like in character.likes)
+        {
+            if (like == character.likes[character.likes.Length - 1])
+            {
+                likes += like;
+            }
+            else
+            {
+                likes += like + ", ";
+            }
+
+        }
+
+        string dislikes = "Dislikes: ";
+        foreach (var dislike in character.dislikes)
+        {
+            if (dislike == character.dislikes[character.dislikes.Length - 1])
+            {
+                dislikes += dislike;
+            }
+            else
+            {
+                dislikes += dislike + ", ";
+            }
+
+        }
+
+        description.text = character.description + "\n" + likes + "\n" + dislikes;
+        loadSliderInfo();
+        
+        foreach (var slider in sliders)
+        {
+            slider.onValueChanged.AddListener(OnSliderValueChanged);
+        }
+        //StartCoroutine(Delay());
     }
 
     // Update is called once per frame

@@ -193,6 +193,54 @@ public class UIManager : MonoBehaviour
         characterProfiles[0].SetActive(true);
     }
 
+    public void SwitchRemyProfile()
+    {
+        groupCanvas.SetActive(false);
+        characterCanvas.SetActive(false);
+        characterProfiles[1].SetActive(true);
+    }
+
+    public void SwitchLeonardProfile()
+    {
+        groupCanvas.SetActive(false);
+        characterCanvas.SetActive(false);
+        characterProfiles[2].SetActive(true);
+    }
+
+    public void SwitchElizabethProfile()
+    {
+        groupCanvas.SetActive(false);
+        characterCanvas.SetActive(false);
+        characterProfiles[3].SetActive(true);
+    }
+
+    public void SwitchDavidProfile()
+    {
+        groupCanvas.SetActive(false);
+        characterCanvas.SetActive(false);
+        characterProfiles[4].SetActive(true);
+    }
+
+    public void SwitchSuzieProfile()
+    {
+        groupCanvas.SetActive(false);
+        characterCanvas.SetActive(false);
+        characterProfiles[5].SetActive(true);
+    }
+
+    public void SwitchBryceProfile()
+    {
+        groupCanvas.SetActive(false);
+        characterCanvas.SetActive(false);
+        characterProfiles[6].SetActive(true);
+    }
+
+    public void SwitchMeganProfile()
+    {
+        groupCanvas.SetActive(false);
+        characterCanvas.SetActive(false);
+        characterProfiles[7].SetActive(true);
+    }
 
     public class TopicData
     {
