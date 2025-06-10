@@ -233,11 +233,11 @@ public class Character : MonoBehaviour
     [System.Serializable] public class Interests { public string interestName; public int interestLevel; }
     [System.Serializable] public class Relation { public string relationName; public int relationLevel; }
 
-    private void AddInterest(int val, string interest)
+    private void AddInterest(int val, string currinterest)
     {
         foreach (var interest in interests)
         {
-            if (interest.interestName == interest && interest.interestLevel <= (100 - val))
+            if (interest.interestName == currinterest && interest.interestLevel <= (100 - val))
                 interest.interestLevel += val;
         }
     }
