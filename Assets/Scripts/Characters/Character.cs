@@ -20,7 +20,7 @@ public class Character : MonoBehaviour
     public string currTopic;
 
     [Header("Player Utilities")]
-    public Animation playerAnimation;
+    public Animator anim;
     public float position;
     public TMP_Text textBubble;
 
@@ -50,15 +50,21 @@ public class Character : MonoBehaviour
         switch (state)
         {
             case NPCState.PARTICIPATING:
+                anim.SetBool("walking", false);
                 DecideOnBestTopic();
+                //listen + speak animation
                 break;
 
             case NPCState.MOVING:
                 PerformMovement();
+                //move animation (walk)
+                anim.SetBool("walking", true);
+                anim.SetBool("listening", false);
+                anim.SetBool("talking", false);
                 break;
         }
     }
-    
+
     /// <summary>
     /// This is the "brain". It checks interests and decides if a move is needed.
     /// It runs every frame while in the PARTICIPATING state.
@@ -75,7 +81,10 @@ public class Character : MonoBehaviour
             if (GetCurrentInterestLevel() >= interestThreshold)
             {
                 // Interest is high enough. Do nothing. Stay put.
-                return; 
+                anim.SetBool("listening", true);
+                anim.SetBool("walking", false);
+                anim.SetBool("talking", false);
+                return;
             }
         }
         // --- END OF NEW LOGIC ---
@@ -117,14 +126,19 @@ public class Character : MonoBehaviour
             float angle = position * 10f;
             float angleRad = angle * Mathf.Deg2Rad;
 
+<<<<<<< Updated upstream
             Vector3 pos = new Vector3(Mathf.Cos(angleRad) * 3f, 0f, Mathf.Sin(angleRad) * 3f);
             groupPosition.y = 0f;
+=======
+            Vector3 pos = new Vector3(Mathf.Cos(angleRad) * 8f, 0f, Mathf.Sin(angleRad) * 8f);
+
+>>>>>>> Stashed changes
             destination = groupPosition + pos;
 
             state = NPCState.MOVING;
         }
     }
-    
+
     /// <summary>
     /// Gets the character's interest level in their current topic.
     /// </summary>
@@ -156,7 +170,7 @@ public class Character : MonoBehaviour
             state = NPCState.PARTICIPATING;
             return;
         }
-        
+
         transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
         Vector3 groupCenter = groups.GetGroupPosition(currTopic);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(groupCenter - transform.position), moveSpeed * Time.deltaTime);
@@ -187,7 +201,12 @@ public class Character : MonoBehaviour
     public void Broadcast(string message)
     {
         textBubble.text = message;
+        //set speaking flag true
+        anim.SetBool("talking", true);
+        anim.SetBool("listening", false);
+        anim.SetBool("walking", false);
         AddInterest(20);
+        Invoke("TalkingFalse", Random.Range(4f, 10f));
     }
 
     [System.Serializable] public class NPCDataList { public NPCData[] npcList; }
@@ -217,5 +236,9 @@ public class Character : MonoBehaviour
             DecreaseInterest(5);
         }
     }
-    
+
+    private void TalkingFalse()
+    {
+        anim.SetBool("talking", false);
+    }
 }
