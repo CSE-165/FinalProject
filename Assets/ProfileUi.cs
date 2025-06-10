@@ -14,7 +14,9 @@ public class ProfileUi : MonoBehaviour
     public List<TMP_Text> interestLabels;
     public Slider[] sliders;
 
-
+    private bool userIsDragging = false;
+    private float lastRefreshTime = 0f;
+    private float refreshInterval = 2f;
     void Start()
     {
         StartCoroutine(Delay());
@@ -23,24 +25,27 @@ public class ProfileUi : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        loadSliderInfo();
+        if (!userIsDragging && Time.time - lastRefreshTime >= refreshInterval)
+        {
+            loadSliderInfo();
+            lastRefreshTime = Time.time;
+        }
     }
 
-    void OnSliderValueChanged(float value)
+    public void OnSliderValueChanged(int index, float value)
     {
-        for (int i = 0; i < sliders.Length; i++)
+        if (index >= 0 && index < character.interests.Length)
         {
-            character.interests[i].interestLevel = (int)(sliders[i].value * 100);
+            character.interests[index].interestLevel = Mathf.RoundToInt(value * 100);
+            interestLabels[index].text = character.interests[index].interestName + " " + character.interests[index].interestLevel;
         }
-
-        loadSliderInfo();
     }
 
     void loadSliderInfo()
     {
         for (int i = 0; i < sliders.Length; i++)
         {
-            sliders[i].value = (character.interests[i].interestLevel)/100.0f;
+            StartCoroutine(LerpSliderDown(i, character.interests[i].interestLevel / 100.0f, 1f));
             interestLabels[i].text = character.interests[i].interestName + " " + character.interests[i].interestLevel.ToString();
         }
     }
@@ -49,41 +54,43 @@ public class ProfileUi : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1.0f);
 
-        string likes = "Likes: ";
-        foreach (var like in character.likes)
-        {
-            if (like == character.likes[character.likes.Length - 1])
-            {
-                likes += like;
-            }
-            else
-            {
-                likes += like + ", ";
-            }
-
-        }
-
-        string dislikes = "Dislikes: ";
-        foreach (var dislike in character.dislikes)
-        {
-            if (dislike == character.dislikes[character.dislikes.Length - 1])
-            {
-                dislikes += dislike;
-            }
-            else
-            {
-                dislikes += dislike + ", ";
-            }
-
-        }
-
+        string likes = "Likes: " + string.Join(", ", character.likes);
+        string dislikes = "Dislikes: " + string.Join(", ", character.dislikes);
         description.text = character.description + "\n" + likes + "\n" + dislikes;
+
         loadSliderInfo();
-        
-        foreach (var slider in sliders)
+
+        // Add listeners for all sliders
+        for (int i = 0; i < sliders.Length; i++)
         {
-            slider.onValueChanged.AddListener(OnSliderValueChanged);
+            int index = i; // Capture index for use in lambda
+            sliders[i].onValueChanged.AddListener((value) => OnSliderValueChanged(index, value));
+        }
+    }
+    
+
+    private IEnumerator LerpSliderDown(int index, float targetPercent, float duration)
+    {
+        float startValue = sliders[index].value;
+        float endValue = Mathf.Clamp01(targetPercent); // ensure value is between 0 and 1
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float newValue = Mathf.Lerp(startValue, endValue, elapsed / duration);
+            sliders[index].value = newValue;
+
+        
+
+            yield return null;
         }
 
+        // Ensure final value is exact
+        sliders[index].value = endValue;
     }
+
+    
+    public void OnBeginDragSlider() => userIsDragging = true;
+    public void OnEndDragSlider() => userIsDragging = false;
 }
