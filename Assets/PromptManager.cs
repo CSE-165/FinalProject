@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -40,24 +41,28 @@ public class PromptManager : MonoBehaviour
             List<ConversationTurn> turns = ParseMultiTurnResponse(responseJson);
 
             // Loop through each generated turn
-            foreach (var turn in turns)
-            {
-                // Find the NPC who matches the speaker name
-                Debug.Log($"NPC {turn.speaker} says: {turn.message}");
-                Character speaker = groupData.characters.FirstOrDefault(c => c.npcID == turn.speaker);
-                if (speaker != null)
-                {
-                    // Make the character speak and update conversation history
-                    speaker.Broadcast(turn.message); // Broadcast NPC message
-                    groupData.conversationHistory.Add(turn);
-                    //Debug.Log($"NPC {turn.speaker} says: {turn.message}");
-                }
-                else
-                {
-                    Debug.LogWarning($"Speaker '{turn.speaker}' not found in group.");
-                }
-            }
+            StartCoroutine(SequentialBroadcast(turns, groupData));
         });
+    }
+
+    private IEnumerator SequentialBroadcast(List<ConversationTurn> turns, Group.GroupData groupData)
+    {
+        foreach (var turn in turns)
+        {
+            Character speaker = groupData.characters.FirstOrDefault(c => c.npcID == turn.speaker);
+            if (speaker != null)
+            {
+                StartCoroutine(speaker.Broadcast(turn.message));
+                Debug.Log($"NPC {speaker.npcID} broadcasts: {turn.message}");
+                groupData.conversationHistory.Add(turn);
+            }
+            else
+            {
+                Debug.LogWarning($"Speaker '{turn.speaker}' not found in group.");
+            }
+
+            yield return new WaitForSeconds(20f); // Wait 10 seconds between each turn
+        }
     }
 
     /// <summary>

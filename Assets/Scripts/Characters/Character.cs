@@ -23,6 +23,7 @@ public class Character : MonoBehaviour
     public Animator anim;
     public float position;
     public TMP_Text textBubble;
+    public Canvas canvas;
 
     [Header("Movement & Behavior Settings")]
     public float moveSpeed = 3f;
@@ -63,6 +64,9 @@ public class Character : MonoBehaviour
                 anim.SetBool("talking", false);
                 break;
         }
+        // rotate the canvas 180 degrees to face the camera
+        canvas.transform.LookAt(Camera.main.transform);
+        canvas.transform.rotation *= Quaternion.Euler(0f, 180f, 0f);
     }
 
     /// <summary>
@@ -123,17 +127,11 @@ public class Character : MonoBehaviour
             groups.AddCharacterToGroup(this, bestTopic);
             Vector3 groupPosition = groups.GetGroupPosition(bestTopic);
 
-            position = Random.Range(0f, 36f);
-            float angle = position * 10f;
+            float angle = position * 45f;
             float angleRad = angle * Mathf.Deg2Rad;
 
-<<<<<<< Updated upstream
             Vector3 pos = new Vector3(Mathf.Cos(angleRad) * 3f, 0f, Mathf.Sin(angleRad) * 3f);
             groupPosition.y = 0f;
-=======
-            Vector3 pos = new Vector3(Mathf.Cos(angleRad) * 8f, 0f, Mathf.Sin(angleRad) * 8f);
-
->>>>>>> Stashed changes
             destination = groupPosition + pos;
 
             state = NPCState.MOVING;
@@ -199,15 +197,33 @@ public class Character : MonoBehaviour
     /// Broadcasts a message to the NPC's text bubble and increases interest in the current topic.
     /// </summary>
     /// <param name="message">The message to display in the text bubble.</param>
-    public void Broadcast(string message)
+    public IEnumerator Broadcast(string message)
     {
-        textBubble.text = message;
         //set speaking flag true
+        TextTimer(); // Start the text timer to clear the bubble after a while
         anim.SetBool("talking", true);
         anim.SetBool("listening", false);
         anim.SetBool("walking", false);
         AddInterest(20);
         Invoke("TalkingFalse", Random.Range(4f, 10f));
+
+        textBubble.text = "";
+        string msg = "";
+        foreach (char letter in message.ToCharArray())
+        {
+            msg += letter.ToString();
+            textBubble.text = msg + "...";
+            yield return new WaitForSecondsRealtime(0.05f); // Adjust typing speed here
+        }
+        textBubble.text = message; // Final message display
+
+    }
+
+    private IEnumerator TextTimer()
+    {
+        yield return new WaitForSecondsRealtime(20f);
+        textBubble.text = "";
+        TalkingFalse();
     }
 
     [System.Serializable] public class NPCDataList { public NPCData[] npcList; }

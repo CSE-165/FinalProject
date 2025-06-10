@@ -6,63 +6,20 @@
       "dislikes": ["animal cruelty", "rainy days", "loud arguments or confrontation"],
       "likes": ["cats", "meeting new people", "baking"],
       "interests": [
-        {
-          "interestName": "fishing",
-          "interestLevel": 30
-        },
-        {
-          "interestName": "fashion",
-          "interestLevel": 50
-        },
-        {
-          "interestName": "pets",
-          "interestLevel": 100
-        }
-        ,
-        {
-          "interestName": "travel",
-          "interestLevel": 70
-        }
-        ,
-        {
-          "interestName": "gossip",
-          "interestLevel": 80
-        }
+        { "interestName": "fishing", "interestLevel": 30 },
+        { "interestName": "fashion", "interestLevel": 50 },
+        { "interestName": "pets", "interestLevel": 100 },
+        { "interestName": "travel", "interestLevel": 70 },
+        { "interestName": "gossip", "interestLevel": 80 }
       ],
       "relations": [
-        {
-          "relationName": "Remy",
-          "relationLevel": 0
-        },
-        {
-          "relationName": "Leonard",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Elizabeth",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "David",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Suzie",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Bryce",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Megan",
-          "relationLevel": 0
-        }
+        { "relationName": "Remy", "relationLevel": 0 },
+        { "relationName": "Leonard", "relationLevel": 0 },
+        { "relationName": "Elizabeth", "relationLevel": 0 },
+        { "relationName": "David", "relationLevel": 0 },
+        { "relationName": "Suzie", "relationLevel": 0 },
+        { "relationName": "Bryce", "relationLevel": 0 },
+        { "relationName": "Megan", "relationLevel": 0 }
       ]
     },
     {
@@ -71,63 +28,20 @@
       "dislikes": ["rules and responsibilities", "close mindedness"],
       "likes": ["surfing", "storytelling"],
       "interests": [
-        {
-          "interestName": "fishing",
-          "interestLevel": 80
-        },
-        {
-          "interestName": "fashion",
-          "interestLevel": 20
-        },
-        {
-          "interestName": "pets",
-          "interestLevel": 60
-        }
-        ,
-        {
-          "interestName": "travel",
-          "interestLevel": 90
-        }
-        ,
-        {
-          "interestName": "gossip",
-          "interestLevel": 50
-        }
+        { "interestName": "fishing", "interestLevel": 80 },
+        { "interestName": "fashion", "interestLevel": 20 },
+        { "interestName": "pets", "interestLevel": 60 },
+        { "interestName": "travel", "interestLevel": 90 },
+        { "interestName": "gossip", "interestLevel": 50 }
       ],
       "relations": [
-        {
-          "relationName": "Sophie",
-          "relationLevel": 0
-        },
-        {
-          "relationName": "Leonard",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Elizabeth",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "David",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Suzie",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Bryce",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Megan",
-          "relationLevel": 0
-        }
+        { "relationName": "Sophie", "relationLevel": 0 },
+        { "relationName": "Leonard", "relationLevel": 0 },
+        { "relationName": "Elizabeth", "relationLevel": 0 },
+        { "relationName": "David", "relationLevel": 0 },
+        { "relationName": "Suzie", "relationLevel": 0 },
+        { "relationName": "Bryce", "relationLevel": 0 },
+        { "relationName": "Megan", "relationLevel": 0 }
       ]
     },
     {
@@ -136,63 +50,130 @@
       "dislikes": ["disorderly conduct", "disrespect"],
       "likes": ["meeting new people", "talking about his work"],
       "interests": [
-        {
-          "interestName": "fishing",
-          "interestLevel": 60
-        },
-        {
-          "interestName": "fashion",
-          "interestLevel": 70
-        },
-        {
-          "interestName": "pets",
-          "interestLevel": 30
-        }
-        ,
-        {
-          "interestName": "travel",
-          "interestLevel": 80
-        }
-        ,
-        {
-          "interestName": "gossip",
-          "interestLevel": 50
-        }
+        { "interestName": "fishing", "interestLevel": 60 },
+        { "interestName": "fashion", "interestLevel": 70 },
+        { "interestName": "pets", "interestLevel": 30 },
+        { "interestName": "travel", "interestLevel": 80 },
+        { "interestName": "gossip", "interestLevel": 50 }
       ],
       "relations": [
-        {
-          "relationName": "Sophie",
-          "relationLevel": 0
-        },
-        {
-          "relationName": "Remy",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Elizabeth",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "David",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Suzie",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Bryce",
-          "relationLevel": 0
-        }
-        ,
-        {
-          "relationName": "Megan",
-          "relationLevel": 0
-        }
+        { "relationName": "Sophie", "relationLevel": 0 },
+        { "relationName": "Remy", "relationLevel": 0 },
+        { "relationName": "Elizabeth", "relationLevel": 0 },
+        { "relationName": "David", "relationLevel": 0 },
+        { "relationName": "Suzie", "relationLevel": 0 },
+        { "relationName": "Bryce", "relationLevel": 0 },
+        { "relationName": "Megan", "relationLevel": 0 }
+      ]
+    },
+    {
+      "id": "Elizabeth",
+      "description": "Elizabeth is a retired teacher with a love for gardening and classical music. She is calm and wise, often offering helpful advice.",
+      "dislikes": ["rudeness", "littering"],
+      "likes": ["gardening", "reading", "classical music"],
+      "interests": [
+        { "interestName": "fishing", "interestLevel": 20 },
+        { "interestName": "fashion", "interestLevel": 40 },
+        { "interestName": "pets", "interestLevel": 70 },
+        { "interestName": "travel", "interestLevel": 30 },
+        { "interestName": "gossip", "interestLevel": 10 }
+      ],
+      "relations": [
+        { "relationName": "Sophie", "relationLevel": 0 },
+        { "relationName": "Remy", "relationLevel": 0 },
+        { "relationName": "Leonard", "relationLevel": 0 },
+        { "relationName": "David", "relationLevel": 0 },
+        { "relationName": "Suzie", "relationLevel": 0 },
+        { "relationName": "Bryce", "relationLevel": 0 },
+        { "relationName": "Megan", "relationLevel": 0 }
+      ]
+    },
+    {
+      "id": "David",
+      "description": "David is a quiet and intellectual individual who enjoys chess and puzzles. He wears glasses and a navy blue sweater.",
+      "dislikes": ["loud noises", "interruptions"],
+      "likes": ["chess", "solving puzzles"],
+      "interests": [
+        { "interestName": "fishing", "interestLevel": 10 },
+        { "interestName": "fashion", "interestLevel": 15 },
+        { "interestName": "pets", "interestLevel": 40 },
+        { "interestName": "travel", "interestLevel": 60 },
+        { "interestName": "gossip", "interestLevel": 5 }
+      ],
+      "relations": [
+        { "relationName": "Sophie", "relationLevel": 0 },
+        { "relationName": "Remy", "relationLevel": 0 },
+        { "relationName": "Leonard", "relationLevel": 0 },
+        { "relationName": "Elizabeth", "relationLevel": 0 },
+        { "relationName": "Suzie", "relationLevel": 0 },
+        { "relationName": "Bryce", "relationLevel": 0 },
+        { "relationName": "Megan", "relationLevel": 0 }
+      ]
+    },
+    {
+      "id": "Suzie",
+      "description": "Suzie is an energetic teenager who loves video games and cosplay. She wears colorful clothing and carries a handheld console everywhere.",
+      "dislikes": ["waiting", "boring conversations"],
+      "likes": ["cosplay", "gaming", "anime"],
+      "interests": [
+        { "interestName": "fishing", "interestLevel": 0 },
+        { "interestName": "fashion", "interestLevel": 85 },
+        { "interestName": "pets", "interestLevel": 90 },
+        { "interestName": "travel", "interestLevel": 75 },
+        { "interestName": "gossip", "interestLevel": 95 }
+      ],
+      "relations": [
+        { "relationName": "Sophie", "relationLevel": 0 },
+        { "relationName": "Remy", "relationLevel": 0 },
+        { "relationName": "Leonard", "relationLevel": 0 },
+        { "relationName": "Elizabeth", "relationLevel": 0 },
+        { "relationName": "David", "relationLevel": 0 },
+        { "relationName": "Bryce", "relationLevel": 0 },
+        { "relationName": "Megan", "relationLevel": 0 }
+      ]
+    },
+    {
+      "id": "Bryce",
+      "description": "Bryce is a mechanic who is great with his hands but struggles to express his emotions. He’s usually in overalls and smells faintly of motor oil.",
+      "dislikes": ["dishonesty", "wasting time"],
+      "likes": ["cars", "tinkering", "quiet places"],
+      "interests": [
+        { "interestName": "fishing", "interestLevel": 100 },
+        { "interestName": "fashion", "interestLevel": 10 },
+        { "interestName": "pets", "interestLevel": 55 },
+        { "interestName": "travel", "interestLevel": 20 },
+        { "interestName": "gossip", "interestLevel": 25 }
+      ],
+      "relations": [
+        { "relationName": "Sophie", "relationLevel": 0 },
+        { "relationName": "Remy", "relationLevel": 0 },
+        { "relationName": "Leonard", "relationLevel": 0 },
+        { "relationName": "Elizabeth", "relationLevel": 0 },
+        { "relationName": "David", "relationLevel": 0 },
+        { "relationName": "Suzie", "relationLevel": 0 },
+        { "relationName": "Megan", "relationLevel": 0 }
+      ]
+    },
+    {
+      "id": "Megan",
+      "description": "Megan is a confident and ambitious young woman studying law. She's outspoken and always ready to debate her point.",
+      "dislikes": ["injustice", "laziness"],
+      "likes": ["debates", "studying", "coffee"],
+      "interests": [
+        { "interestName": "fishing", "interestLevel": 5 },
+        { "interestName": "fashion", "interestLevel": 60 },
+        { "interestName": "pets", "interestLevel": 40 },
+        { "interestName": "travel", "interestLevel": 90 },
+        { "interestName": "gossip", "interestLevel": 70 }
+      ],
+      "relations": [
+        { "relationName": "Sophie", "relationLevel": 0 },
+        { "relationName": "Remy", "relationLevel": 0 },
+        { "relationName": "Leonard", "relationLevel": 0 },
+        { "relationName": "Elizabeth", "relationLevel": 0 },
+        { "relationName": "David", "relationLevel": 0 },
+        { "relationName": "Suzie", "relationLevel": 0 },
+        { "relationName": "Bryce", "relationLevel": 0 }
       ]
     }
   ]

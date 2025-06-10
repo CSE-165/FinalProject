@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
+
 
 /// <summary>
 /// Group class representes a collection of non-player characters (NPCs) that share a common topic.
@@ -21,28 +23,62 @@ public class Group : MonoBehaviour
     private Character[] allCharacters;
     public PromptManager promptManager;
 
+    public TMP_Text[] textBubble;
+    public Canvas[] canvas;
+
     // Start is called before the first frame update
     public void Start()
     {
         groupData = new GroupData[4];
+        LoadGroupData();
         StartCoroutine(InitializeAndStartPrompting());
-        
+      
         // if (groupPosition.Length != topics.Length)
         // {
         //     Debug.LogError("Group positions and topics count mismatch!");
         // }
 
+        for (int i = 0; i < textBubble.Length; i++)
+        {
+            UpdateTextBubble(i, groupData[i].topic);
+        }
+
+    }
+
+    public void Update()
+    {
+        // Update logic can be added here if needed
+        foreach (var canva in canvas)
+        {
+            // Smoothly rotate the canvas to look at the camera
+            canva.transform.LookAt(Camera.main.transform);
+            canva.transform.rotation *= Quaternion.Euler(0f, 180f, 0f); // Adjust rotation to face camera
+        }
+    }
+
+    private void UpdateTextBubble(int index, string message)
+    {
+        if (index < 0 || index >= textBubble.Length)
+        {
+            Debug.LogError("Index out of bounds for text bubbles.");
+            return;
+        }
+
+        textBubble[index].text = message;
     }
 
     private IEnumerator InitializeAndStartPrompting()
     {
-        LoadGroupData();
-        
+
         yield return new WaitForSecondsRealtime(0.5f);
 
         foreach (var EachGroupData in groupData)
         {
-            promptManager.GenerateMultiTurnConversation(EachGroupData);
+            if (EachGroupData.characters.Count > 1)
+            {
+                promptManager.GenerateMultiTurnConversation(EachGroupData);
+            }
+
         }
     }
 
@@ -89,7 +125,7 @@ public class Group : MonoBehaviour
             Debug.LogError("Index out of bounds for group data.");
             return;
         }
-
+        UpdateTextBubble(index, newTopic);
         groupData[index].topic = newTopic;
         Debug.Log($"Group topic changed to {newTopic} at index {index}.");
     }
