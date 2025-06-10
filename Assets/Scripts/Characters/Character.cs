@@ -202,7 +202,7 @@ public class Character : MonoBehaviour
     public IEnumerator Broadcast(string message)
     {
         //set speaking flag true
-        TextTimer(); // Start the text timer to clear the bubble after a while
+        StartCoroutine(TextTimer()); // Start the text timer to clear the bubble after a while
         anim.SetBool("talking", true);
         anim.SetBool("listening", false);
         anim.SetBool("walking", false);
