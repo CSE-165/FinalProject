@@ -116,7 +116,7 @@ public class ProfileUi : MonoBehaviour
             float newValue = Mathf.Lerp(startValue, endValue, elapsed / duration);
             sliders[index].value = newValue;
 
-        
+
 
             yield return null;
         }
