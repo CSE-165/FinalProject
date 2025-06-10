@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     public GameObject groupCanvas;
     public GameObject characterCanvas;
 
+    public GameObject[] characterProfiles;
+
     public Group group;
 
     public List<TMP_Dropdown> dropdowns;
@@ -64,12 +66,20 @@ public class UIManager : MonoBehaviour
     {
         groupCanvas.SetActive(true);
         characterCanvas.SetActive(false);
+        foreach (var profile in characterProfiles)
+        {
+            profile.SetActive(false);
+        }
     }
 
     public void SwitchToCharacterMenu()
     {
         characterCanvas.SetActive(true);
         groupCanvas.SetActive(false);
+        foreach (var profile in characterProfiles)
+        {
+            profile.SetActive(false);
+        }
     }
 
     public void InitDropdowns()
@@ -174,6 +184,13 @@ public class UIManager : MonoBehaviour
         dropdowns[3].options.Insert(0, new TMP_Dropdown.OptionData(selected)); // Show selected on top
         dropdowns[3].value = 0; // Force selection to top
         dropdowns[3].RefreshShownValue();
+    }
+
+    public void SwitchSophieProfile()
+    {
+        groupCanvas.SetActive(false);
+        characterCanvas.SetActive(false);
+        characterProfiles[0].SetActive(true);
     }
 
 
